@@ -1,4 +1,2 @@
 require 'corefines/version'
-
-module Corefines
-end
+require 'corefines/support/alias_submodules'
