@@ -1,28 +1,26 @@
 describe Corefines::Support::AliasSubmodules do
 
-  describe '#included' do
-
-    before :context do
-      # Define dynamically to not pollute global context of other tests.
-      ModuleX = Module.new.tap do |m|
-        m.class_eval <<-CODE
-          Something = 66
-          module Indent end
-          module StripHeredoc end
-          include Corefines::Support::AliasSubmodules
-        CODE
-      end
+  before :context do
+    # Define dynamically to not pollute global context of other tests.
+    ModuleX = Module.new.tap do |m|
+      m.class_eval <<-CODE
+        Something = 66
+        module Indent end
+        module StripHeredoc end
+        module Blank end
+        include Corefines::Support::AliasSubmodules
+      CODE
     end
+  end
 
-    after :context do
-      Object.send(:remove_const, :ModuleX)
-    end
+  after :context do
+    Object.send(:remove_const, :ModuleX)
+  end
+
+
+  describe '.included' do
 
     subject(:target) { ModuleX }
-
-    it "defines method :* that returns itself" do
-      expect(ModuleX::*).to eql ModuleX
-    end
 
     it 'defines method-named "alias" for each submodule' do
       expect(ModuleX.indent).to eql ModuleX::Indent
@@ -39,7 +37,29 @@ describe Corefines::Support::AliasSubmodules do
   end
 
 
-  describe '#method_name' do
+  describe '.*' do
+    it "returns itself" do
+      expect(ModuleX::*).to eql ModuleX
+    end
+  end
+
+
+  describe '.[]' do
+    subject { ModuleX[:indent, :strip_heredoc] }
+
+    it "returns module that includes the named modules" do
+      is_expected.to be_instance_of ::Module
+      is_expected.to include ModuleX::Indent, ModuleX::StripHeredoc
+      is_expected.to_not include ModuleX::Blank
+    end
+
+    it "raises ArgumentError if any submodule alias doesn't exist" do
+      expect { ModuleX[:indent, :invalid] }.to raise_error ArgumentError
+    end
+  end
+
+
+  describe '.method_name' do
 
     def method_name(str)
       described_class.send(:method_name, str)
@@ -54,7 +74,8 @@ describe Corefines::Support::AliasSubmodules do
       'Unindent' => 'unindent',
       'StripHeredoc' => 'strip_heredoc',
       'ToJSON' => 'to_json',
-    }.merge(described_class::OPERATORS_MAP).each do |input, expected|
+    }.merge(described_class.const_get(:OPERATORS_MAP)).each do |input, expected|
+
       it "converts '#{input}' to '#{expected}'" do
         input_clone = input.to_s.dup
         expect(method_name input).to eq expected

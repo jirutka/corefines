@@ -5,7 +5,7 @@ module Corefines
     # When this module is included, then it:
     #
     # 1. Defines an "alias" for each submodule, i.e. singleton method that
-    #    returns the submodule and its named after the submodule, but the name
+    #    returns the submodule and it's named after the submodule, but the name
     #    is converted to underscore_separated or an operator. For example,
     #    instead of <tt>using Corefines::String::ToHtml</tt> one can write
     #    <tt>using Corefines::String::to_html</tt>.
@@ -13,9 +13,22 @@ module Corefines
     # 2. Includes all the submodules into the module. This allows to use all
     #    refinements inside the submodules just by _using_ their parent module.
     #
-    # 3. Defines method +*+ that returns itself. This is just a syntactic sugar
-    #    to allow <tt>using Corefines::A::*</tt>, which is the same as
-    #    +using Corefines::A+, but communicates the intention better.
+    # 3. Defines methods {*} and {[]}.
+    #
+    # @!method self.*
+    #   Returns +self+. This is just a syntactic sugar to allow
+    #   <tt>using Corefines::A::*</tt>, which is the same as
+    #   +using Corefines::A+, but communicates the intention better.
+    #
+    #   @return [Module] self
+    #
+    # @!method self.[](*names)
+    #   @example
+    #     Corefines::Object[:blank?, :then]
+    #
+    #   @param names [Array<Symbol>] names of submodules aliases to include
+    #     into the returned module.
+    #   @return [Module] a new module that includes the named submodules.
     #
     module AliasSubmodules
 
@@ -58,8 +71,7 @@ module Corefines
           target.send(:include, submodule)
         end
 
-        # Defines method * that returns itself. (3)
-        target.define_singleton_method(:*) { target }
+        target.extend ClassMethods
       end
 
       def self.method_name(module_name)
@@ -76,6 +88,26 @@ module Corefines
           s.downcase!
         end
       end
+
+
+      module ClassMethods
+        def *
+          self
+        end
+
+        def [](*names)
+          ::Module.new.tap do |mod|
+            names.each do |mth|
+              unless respond_to? mth
+                fail ArgumentError, "no such refinements submodule with alias '#{mth}'"
+              end
+              mod.send(:include, public_send(mth))
+            end
+          end
+        end
+      end
+
+      private_constant :ClassMethods, :OPERATORS_MAP
     end
   end
 end
