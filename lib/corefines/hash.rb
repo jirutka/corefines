@@ -1,6 +1,18 @@
 module Corefines
   module Hash
     ##
+    # @!method map_send(method_name, *args, &block)
+    #   (see Array::MapSend#map_send)
+    #
+    module MapSend
+      refine ::Hash do
+        def map_send(method_name, *args, &block)
+          map { |e| e.send(method_name, *args, &block) }
+        end
+      end
+    end
+
+    ##
     # @!method +(other_hash)
     #   Alias for +#merge+.
     #

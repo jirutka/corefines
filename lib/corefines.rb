@@ -6,8 +6,10 @@ unless [:refine, :using].any? { |mth| ::Module.private_method_defined? mth }
   require 'corefines/support/fake_refinements'
 end
 
+require 'corefines/array'
 require 'corefines/hash'
 require 'corefines/module'
 require 'corefines/object'
+require 'corefines/set'
 require 'corefines/string'
 require 'corefines/symbol'
