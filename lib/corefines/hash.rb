@@ -22,9 +22,5 @@ module Corefines
     end
 
     include Support::AliasSubmodules
-
-    def self.+
-      OpPlus
-    end
   end
 end

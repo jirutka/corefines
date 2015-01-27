@@ -23,9 +23,5 @@ module Corefines
     end
 
     include Support::AliasSubmodules
-
-    def self.~
-      OpTilde
-    end
   end
 end

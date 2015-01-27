@@ -39,30 +39,30 @@ describe Corefines::Support::AliasSubmodules do
   end
 
 
-  describe '#underscore' do
+  describe '#method_name' do
 
-    def underscore(str)
-      described_class.send(:underscore, str)
+    def method_name(str)
+      described_class.send(:method_name, str)
     end
 
     it "string without any uppercase returns untouched" do
       str = 'allonsy!'
-      expect(underscore str).to eql str
+      expect(method_name str).to eql str
     end
 
     {
       'Unindent' => 'unindent',
       'StripHeredoc' => 'strip_heredoc',
-      'ToJSON' => 'to_json'
-    }.each do |input, expected|
+      'ToJSON' => 'to_json',
+    }.merge(described_class::OPERATORS_MAP).each do |input, expected|
       it "converts '#{input}' to '#{expected}'" do
-        input_clone = input.dup
-        expect(underscore input).to eq expected
-        expect(input).to eql input_clone
+        input_clone = input.to_s.dup
+        expect(method_name input).to eq expected
+        expect(input.to_s).to eql input_clone
       end
 
       it "converts :#{input} to '#{expected}'" do
-        expect(underscore input.to_sym).to eq expected
+        expect(method_name input.to_sym).to eq expected
       end
     end
   end

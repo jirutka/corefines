@@ -6,7 +6,7 @@ module Corefines
     #
     # 1. Defines an "alias" for each submodule, i.e. singleton method that
     #    returns the submodule and its named after the submodule, but the name
-    #    is converted to underscore_separated. For example,
+    #    is converted to underscore_separated or an operator. For example,
     #    instead of <tt>using Corefines::String::ToHtml</tt> one can write
     #    <tt>using Corefines::String::to_html</tt>.
     #
@@ -19,6 +19,31 @@ module Corefines
     #
     module AliasSubmodules
 
+      OPERATORS_MAP = {
+        :op_plus   => :+,
+        :op_minus  => :-,
+        :op_pow    => :**,
+        :op_mul    => :*,
+        :op_div    => :/,
+        :op_mod    => :%,
+        :op_tilde  => :~,
+        :op_cmp    => :<=>,
+        :op_lshift => :<<,
+        :op_rshift => :>>,
+        :op_lt     => :<,
+        :op_gt     => :>,
+        :op_case   => :===,
+        :op_equal  => :==,
+        :op_apply  => :=~,
+        :op_lt_eq  => :<=,
+        :op_gt_eq  => :>=,
+        :op_or     => :|,
+        :op_and    => :&,
+        :op_xor    => :^,
+        :op_store  => :[]=,
+        :op_fetch  => :[]
+      }
+
       private
 
       def self.included(target)
@@ -27,7 +52,7 @@ module Corefines
           next unless submodule.instance_of? ::Module
 
           # Defines method-named "alias" for the submodule. (1)
-          target.define_singleton_method(underscore(const)) { submodule }
+          target.define_singleton_method(method_name(const)) { submodule }
 
           # Includes the submodule of the target into target. (2)
           target.send(:include, submodule)
@@ -35,6 +60,11 @@ module Corefines
 
         # Defines method * that returns itself. (3)
         target.define_singleton_method(:*) { target }
+      end
+
+      def self.method_name(module_name)
+        name = underscore(module_name)
+        OPERATORS_MAP[name.to_sym] || name
       end
 
       def self.underscore(camel_cased_word)
