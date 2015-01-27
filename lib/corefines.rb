@@ -9,3 +9,4 @@ end
 require 'corefines/module'
 require 'corefines/object'
 require 'corefines/string'
+require 'corefines/symbol'
