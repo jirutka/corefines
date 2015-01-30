@@ -1,3 +1,5 @@
+require 'corefines/support/alias_submodules'
+
 module Corefines
   module Array
     ##

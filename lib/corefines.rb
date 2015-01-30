@@ -1,5 +1,4 @@
 require 'corefines/version'
-require 'corefines/support/alias_submodules'
 require 'corefines/support/fake_refinements'
 
 # Refinements
