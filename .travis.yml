@@ -1,0 +1,20 @@
+language: ruby
+sudo: false
+rvm:
+  - 2.2.0
+  - 2.1.0
+  - 2.0.0
+  - 1.9.3
+  - jruby-9.0.0.0.pre1
+  - jruby-1.7.18
+  - rbx-2.2.7
+  - ruby-head
+  - jruby-head
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head
+addons:
+  code_climate:
+    repo_token:
+      secure: DNXX6vrtb1D1NSxA22LTgHAnIEiRt5OJ6sYeakj3tdtOwclA9/dT+mYA8zI+l8uI7d0ojdWGlWWoJKbLsVvebDaoYSVm7ekLBMS3dhQ/gvd5RIZ0Eo6xadB0QMfsTXIhCkFt8CNlL0YI89abyhLSX2Vn8QFN7K5ihbkKatR+2JY=
