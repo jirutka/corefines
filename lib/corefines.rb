@@ -1,11 +1,8 @@
 require 'corefines/version'
 require 'corefines/support/alias_submodules'
+require 'corefines/support/fake_refinements'
 
-unless [:refine, :using].any? { |mth| ::Module.private_method_defined? mth }
-  warn "corefines: Your Ruby doesn't support refinements, so I'll fake them."
-  require 'corefines/support/fake_refinements'
-end
-
+# Refinements
 require 'corefines/array'
 require 'corefines/hash'
 require 'corefines/module'

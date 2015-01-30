@@ -1,43 +1,52 @@
-require 'corefines/support/fake_refinements'
-
 describe Corefines::Support::FakeRefinements do
 
-  before do
-    rename_private_method ::Module, :refine, :__refine
-    rename_private_method ::Module, :using, :__using
+  before :all do
+    if Module.private_method_defined? :refine
+      Module.send(:alias_method, :_old_refine, :refine)
+    end
 
-    # Doesn't work in rspec when included only in Module.
-    Object.send(:include, described_class)
+    [Object, Module].each do |klass|
+      next unless klass.private_method_defined? :using
+      klass.send(:alias_method, :_old_using, :using)
+    end
 
-    F = create_fixture_modules
+    Corefines::Support::FakeRefinements.define_using(Object)
+    Corefines::Support::FakeRefinements.define_refine(Module)
   end
 
-  # Cleanup
-  after do
-    Object.send(:remove_const, :F)
-    rename_private_method ::Module, :__refine, :refine
-    rename_private_method ::Module, :__using, :using
+  after :all do
+    [Object, Module].each do |klass|
+      next unless klass.private_method_defined? :_old_using
+      klass.send(:alias_method, :using, :_old_using)
+    end
+
+    if Module.private_method_defined? :_old_refine
+      Module.send(:alias_method, :refine, :_old_refine)
+    end
   end
 
+  before(:each) { F = create_fixture_modules }
+  after(:each) { Object.send(:remove_const, :F) }
 
-  describe '#refine' do
+  let(:chip) { F::Chip.new }
+  let(:dale) { F::Dale.new }
 
-    it 'raises TypeError when argument is not a Class' do
+
+  describe 'Module#refine' do
+
+    it "raises TypeError when argument is not a Class" do
       expect { Module.new { refine(:Foo) {} } }.to raise_error TypeError
     end
 
-    it 'raises ArgumentError when no block given' do
+    it "raises ArgumentError when no block given" do
       expect { Module.new { refine(F::Chip) } }.to raise_error ArgumentError
     end
   end
 
 
-  describe '#using' do
+  describe 'Object#using' do
 
-    let(:chip) { F::Chip.new }
-    let(:dale) { F::Dale.new }
-
-    # Preconditions
+    # Precondition checks
     before do
       expect(chip).to_not respond_to :run, :climb, :salute
       expect(dale).to_not respond_to :walk
@@ -84,20 +93,10 @@ describe Corefines::Support::FakeRefinements do
     end
   end
 
-  #
-  # Helpers
-  #
-
-  def rename_private_method(klass, old_name, new_name)
-    return unless klass.private_method_defined? old_name
-
-    klass.send(:alias_method, new_name, old_name)
-    klass.send(:remove_method, old_name)
-  end
 
   def create_fixture_modules
     # Define dynamically to not pollute global context of other tests.
-    Module.new.tap do |m|
+    ::Module.new.tap do |m|
       m.class_eval <<-CODE
         class Chip; end
         class Dale; end
