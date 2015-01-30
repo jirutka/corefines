@@ -13,14 +13,7 @@ module Corefines
     # 2. Includes all the submodules into the module. This allows to use all
     #    refinements inside the submodules just by _using_ their parent module.
     #
-    # 3. Defines methods {*} and {[]}.
-    #
-    # @!method self.*
-    #   Returns +self+. This is just a syntactic sugar to allow
-    #   <tt>using Corefines::A::*</tt>, which is the same as
-    #   +using Corefines::A+, but communicates the intention better.
-    #
-    #   @return [Module] self
+    # 3. Defines method {[]}.
     #
     # @!method self.[](*names)
     #   @example
@@ -91,9 +84,6 @@ module Corefines
 
 
       module ClassMethods
-        def *
-          self
-        end
 
         def [](*names)
           ::Module.new.tap do |mod|

@@ -37,13 +37,6 @@ describe Corefines::Support::AliasSubmodules do
   end
 
 
-  describe '.*' do
-    it "returns itself" do
-      expect(ModuleX::*).to eql ModuleX
-    end
-  end
-
-
   describe '.[]' do
     subject { ModuleX[:indent, :strip_heredoc] }
 
