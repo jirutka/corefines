@@ -4,6 +4,8 @@ Jakub Jirutka <https://github.com/jirutka[@jirutka]>
 :idprefix:
 ifdef::env-github[:idprefix: user-content-]
 :idseparator: -
+:source-language: ruby
+:language: {source-language}
 // custom
 :gem-name: corefines
 :gh-name: jirutka/{gem-name}
@@ -17,20 +19,95 @@ image:https://inch-ci.org/github/{gh-name}.svg?branch={gh-branch}&style={badge-s
 image:https://img.shields.io/gem/v/{gem-name}.svg?style={badge-style}[Gem Version, link="https://rubygems.org/gems/{gem-name}"]
 image:https://img.shields.io/badge/yard-docs-blue.svg?style={badge-style}[Yard Docs, link="http://www.rubydoc.info/github/{gh-name}/frames"]
 
+Corefines is a collection of general purpose _refinements_ for extending the core capabilities of Ruby’s built-in classes.
+It also provides a compatibility mode for older Ruby versions and alternative Ruby implementations that doesn’t support refinements (yet).
+
+
+== Why refinements?
+
+TODO
+
 
 == Installation
 
 Add this line to your application’s Gemfile:
 
-  gem 'corefines'
+[source]
+gem 'corefines'
 
 or to your gemspec:
 
-  s.add_runtime_dependency 'corefines'
+[source]
+s.add_runtime_dependency 'corefines'
 
 and then execute:
 
-  $ bundle install
+[source, sh]
+$ bundle install
+
+
+== Using
+
+First, you must require `corefines` prior using:
+
+[source]
+require 'corefines'
+
+This will _not_ activate any extensions (just registers them), even when running in compatibility mode.
+Extensions (refinements) are activated selectively with http://ruby-doc.org/core-2.2.0/Module.html#method-i-using[using] method.
+
+Refinements are organized in modules by a class which it refines, and by a method which it adds.
+When an extension refines multiple classes, then it’s included in a module named after their nearest common ancestor (superclass).
+
+[source, plain]
+Corefines::<CLASS>::<METHOD>
+
+A single extension can be imported into the current scope classically, e.g.:
+
+[source]
+using Corefines::Hash::MapSend
+
+or preferably using its “alias”:
+
+[source]
+using Corefines::Hash::map_send
+
+If you want to include all extensions for the class, then you can just import the parent module, e.g.:
+
+[source]
+using Corefines::Hash
+
+But more often you want to include multiple extensions for the class, but not all of them, e.g.:
+
+[source]
+using Corefines::Hash::map_send
+using Corefines::Hash::+
+
+this can be abbreviated to:
+
+[source]
+using Corefines::Hash[:map_send, :+]
+
+Refinements can be activated (with `using`) at top-level (per file), inside a class, module or a method.
+
+
+== Compatibility mode
+
+TODO
+
+
+== Acknowledgement
+
+Most of the extension methods are based on, or highly inspired from:
+
+* https://github.com/rails/rails/tree/master/activesupport[Active Support (Ruby extensions)]
+* https://github.com/rubyworks/facets[Ruby Facets]
+
+Very useful articles about refinements and how to “trick” them:
+
+* https://www.new-bamboo.co.uk/blog/2014/02/05/refinements-under-the-knife/[
+Refinements under the knife] by https://github.com/leemachin[@leemachin]
+* http://qiita.com/joker1007/items/68d066a12bc763bd2cb4[Refinement関係の小技とできない事をまとめてみた] by https://github.com/joker1007[@joker1007]
 
 
 == Contributing
@@ -44,4 +121,5 @@ and then execute:
 
 == License
 
-This project is licensed under http://opensource.org/licenses/MIT/[MIT License]. For the full text of the license, see the link:LICENSE[LICENSE] file.
+This project is licensed under http://opensource.org/licenses/MIT/[MIT License].
+For the full text of the license, see the link:LICENSE[LICENSE] file.

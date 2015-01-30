@@ -9,8 +9,13 @@ Gem::Specification.new do |s|
   s.homepage      = 'https://github.com/jirutka/corefines'
   s.license       = 'MIT'
 
-  s.summary       = 'TODO'
-  s.description   = 'TODO'
+  s.summary       = 'A collection of refinements for Ruby core classes.'
+  s.description   = <<-EOS
+Corefines is a collection of general purpose refinements for extending the core
+capabilities of Ruby's built-in classes. It also provides a compatibility mode
+for older Ruby versions and alternative Ruby implementations that
+doesn't support refinements (yet).
+  EOS
 
   begin
     s.files       = `git ls-files -z -- */* {LICENSE,Rakefile,README}*`.split("\x0")
