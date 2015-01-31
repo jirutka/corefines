@@ -89,6 +89,31 @@ module Corefines
     end
 
     ##
+    # @!method instance_values
+    #   @example
+    #     class C
+    #       def initialize(x, y)
+    #         @x, @y = x, y
+    #       end
+    #     end
+    #
+    #     C.new(0, 1).instance_values
+    #     => {x: 0, y: 1}
+    #
+    #   @return [Hash] a hash with symbol keys that maps instance variable
+    #     names without "@" to their corresponding values.
+    #
+    module InstanceValues
+      refine ::Object do
+        def instance_values
+          instance_variables.map { |name|
+            [ name[1..-1].to_sym, instance_variable_get(name) ]
+          }.to_h
+        end
+      end
+    end
+
+    ##
     # @!method then
     #   Passes +self+ to the block and returns its result.
     #
