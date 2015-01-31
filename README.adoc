@@ -118,6 +118,7 @@ TODO
 * {doc-base-url}/Set[Set]
 ** {doc-base-url}/Set/MapSend[#map_send]
 * {doc-base-url}/String[String]
+** {doc-base-url}/String/Concat[#concat]
 ** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
 * {doc-base-url}/Symbol[Symbol]
 ** {doc-base-url}/Symbol/OpTilde[#~]

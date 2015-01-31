@@ -2,6 +2,34 @@ require 'corefines/support/alias_submodules'
 
 module Corefines
   module String
+
+    ##
+    # @!method concat!(obj, separator = nil)
+    #   Appends (concatenates) the given object to +str+. If the +separator+ is
+    #   set and this +str+ is not empty, then it appends the +separator+ before
+    #   the +obj+.
+    #
+    #   @example
+    #     "".concat!("Greetings", ", ") # => "Greetings"
+    #     "Greetings".concat!("programs!", ", ") #=> "Greetings, programs!"
+    #
+    #   @param obj [String, Integer] the string, or codepoint to append.
+    #   @param separator [String, nil] the separator to append when this +str+ is
+    #          not empty.
+    #   @return [String] self
+    #
+    module Concat
+      refine ::String do
+        def concat!(obj, separator = nil)
+          if separator && !self.empty?
+            self << separator << obj
+          else
+            self << obj
+          end
+        end
+      end
+    end
+
     ##
     # @!method unindent
     #   Remove excessive indentation. Useful for multi-line strings embeded in
@@ -39,5 +67,9 @@ module Corefines
     end
 
     include Support::AliasSubmodules
+
+    class << self
+      alias_method :concat!, :concat
+    end
   end
 end
