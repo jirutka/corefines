@@ -114,6 +114,7 @@ TODO
 ** {doc-base-url}/Object/Else[#else]
 ** {doc-base-url}/Object/InstanceValues[#instance_values]
 ** {doc-base-url}/Object/Then[#then]
+** {doc-base-url}/Object/ThenIf[#then_if]
 ** {doc-base-url}/Object/Try[#try]
 ** {doc-base-url}/Object/Try[#try!]
 * {doc-base-url}/Set[Set]

@@ -177,6 +177,45 @@ module Corefines
     end
 
     ##
+    # @!method then_if(*conditions)
+    #   Returns +self+ if +self+ or any of the +conditions+ evaluates to
+    #   +false+, otherwise returns the evaluation of the block.
+    #
+    #   @example
+    #     "foo".then_if(:empty?) { "N/A" } # => "foo"
+    #        "".then_if(:empty?) { "N/A" } # => "N/A"
+    #
+    #   Each condition may be of the type:
+    #   * +Symbol+ - name of the method to be invoked using +public_send+.
+    #   * +Array+  - name of the method followed by arguments to be invoked
+    #     using +public_send+.
+    #   * +Proc+   - proc to be called with +self+ as the argument.
+    #   * Any other object to be evaluated as +true+, or +false+.
+    #
+    #   @param *conditions conditions to evaluate.
+    #   @yield [self] gives +self+ to the block.
+    #   @return [Object] evaluation of the block, or +self+ if any condition
+    #     evaluates to +false+, or no condition given and +self+ evaluates to
+    #     +false+.
+    #
+    module ThenIf
+      refine ::Object do
+        def then_if(*conditions)
+          return self if conditions.empty? && !self
+          return self unless conditions.all? do |arg|
+            case arg
+            when ::Symbol then public_send(arg)
+            when ::Array then public_send(*arg)
+            when ::Proc then arg.call(self)
+            else arg
+            end
+          end
+          yield self
+        end
+      end
+    end
+
+    ##
     # @!method try(method, *args, &block)
     #   Invokes the public method identified by the symbol +method+, passing it
     #   any arguments and/or the block specified, just like the regular Ruby
