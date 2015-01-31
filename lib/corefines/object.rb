@@ -106,6 +106,31 @@ module Corefines
     end
 
     ##
+    # @!method in?(other)
+    #   @example Array
+    #     characters = ["Konata", "Kagami", "Tsukasa"]
+    #     "Konata".in?(characters) # => true
+    #
+    #   @example String
+    #     "f".in?("flynn") # => true
+    #     "x".in?("flynn") # => false
+    #
+    #   @param other [#include?]
+    #   @return [Boolean] +true+ if this object is included in the +other+
+    #     object, +false+ otherwise.
+    #   @raise ArgumentError if the +other+ doesn't respond to +#include?+.
+    #
+    module In
+      refine ::Object do
+        def in?(other)
+          other.include? self
+        rescue NoMethodError
+          fail ArgumentError, "The parameter passed to #in? must respond to #include?"
+        end
+      end
+    end
+
+    ##
     # @!method instance_values
     #   @example
     #     class C
@@ -315,6 +340,7 @@ module Corefines
 
     class << self
       alias_method :blank?, :blank
+      alias_method :in?, :in
       alias_method :presence, :blank
       alias_method :try!, :try
     end
