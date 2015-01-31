@@ -1,3 +1,3 @@
 module Corefines
-  VERSION = '1.0.0.dev'
+  VERSION = '1.0.0.pre.1'
 end
