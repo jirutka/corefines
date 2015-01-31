@@ -17,10 +17,6 @@ describe Array do
         expect(input.index_by).to be_instance_of Enumerator
         expect(input.index_by.each { |x| x[0].to_sym }).to eq expected
       end
-
-      it "returns enumerator that knows its size" do
-        expect(input.index_by.size).to eq input.size
-      end
     end
   end
 end

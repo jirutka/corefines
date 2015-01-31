@@ -35,7 +35,7 @@ module Corefines
             ::Hash[map { |elem| [ yield(elem), elem ] }]
           else
             # Why can't use #enum_for here, because refinement is not active in this context.
-            ::Enumerator.new(size) do |y|
+            ::Enumerator.new do |y|
               ::Hash[map { |elem| [ y.yield(elem), elem ] }]
             end
           end
