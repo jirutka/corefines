@@ -11,6 +11,7 @@ ifdef::env-github[:idprefix: user-content-]
 :gh-name: jirutka/{gem-name}
 :gh-branch: master
 :badge-style: flat
+:doc-base-url: http://www.rubydoc.info/github/jirutka/corefines/Corefines
 
 image:https://img.shields.io/travis/{gh-name}/{gh-branch}.svg?style={badge-style}[Build Status, link="https://travis-ci.org/{gh-name}"]
 image:https://img.shields.io/codeclimate/coverage/github/{gh-name}.svg?style={badge-style}[Test Coverage, link="https://codeclimate.com/github/{gh-name}"]
@@ -94,6 +95,32 @@ Refinements can be activated (with `using`) at top-level (per file), inside a cl
 == Compatibility mode
 
 TODO
+
+
+== List of refinements
+
+* {doc-base-url}/Array[Array]
+** {doc-base-url}/Array/IndexBy[#index_by]
+** {doc-base-url}/Array/MapSend[#map_send]
+** {doc-base-url}/Array/Wrap[.wrap]
+* {doc-base-url}/Hash[Hash]
+** {doc-base-url}/Hash/MapSend[#map_send]
+** {doc-base-url}/Hash/OpPlus[#+]
+* {doc-base-url}/Module[Module]
+** {doc-base-url}/Module/AliasClassMethod[#alias_class_method]
+* {doc-base-url}/Object[Object]
+** {doc-base-url}/Object/Blank[#blank?]
+** {doc-base-url}/Object/Blank[#presence]
+** {doc-base-url}/Object/InstanceValues[#instance_values]
+** {doc-base-url}/Object/Then[#then]
+** {doc-base-url}/Object/Try[#try]
+** {doc-base-url}/Object/Try[#try!]
+* {doc-base-url}/Set[Set]
+** {doc-base-url}/Set/MapSend[#map_send]
+* {doc-base-url}/String[String]
+** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
+* {doc-base-url}/Symbol[Symbol]
+** {doc-base-url}/Symbol/OpTilde[#~]
 
 
 == Acknowledgement
