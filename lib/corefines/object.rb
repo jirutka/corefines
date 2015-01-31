@@ -106,9 +106,10 @@ module Corefines
     module InstanceValues
       refine ::Object do
         def instance_values
-          instance_variables.map { |name|
+          ary = instance_variables.map do |name|
             [ name[1..-1].to_sym, instance_variable_get(name) ]
-          }.to_h
+          end
+          ::Hash[ary]
         end
       end
     end
