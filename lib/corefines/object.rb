@@ -18,10 +18,32 @@ module Corefines
     #
     #   @return [Boolean]
     #
+    # @!method presence
+    #   Returns object if it's not {#blank?}, otherwise returns +nil+.
+    #   +obj.presence+ is equivalent to <tt>obj.blank? ? nil : obj</tt>.
+    #
+    #   This is handy for any representation of objects where blank is the same
+    #   as not present at all. For example, this simplifies a common check for
+    #   HTTP POST/query parameters:
+    #
+    #     state = params[:state] if params[:state].present?
+    #     country = params[:country] if params[:country].present?
+    #     region = state || country || 'CZ'
+    #
+    #   becomes...
+    #
+    #     region = params[:state].presence || params[:country].presence || 'CZ'
+    #
+    #   @return [Object, nil] object if it's not {#blank?}, otherwise +nil+.
+    #
     module Blank
       refine ::Object do
         def blank?
           respond_to?(:empty?) ? !!empty? : !self
+        end
+
+        def presence
+          self unless blank?
         end
       end
 
@@ -90,6 +112,7 @@ module Corefines
 
     class << self
       alias_method :blank?, :blank
+      alias_method :presence, :blank
     end
   end
 end
