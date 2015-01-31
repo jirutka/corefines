@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 Corefines is a collection of general purpose refinements for extending the core
 capabilities of Ruby's built-in classes. It also provides a compatibility mode
 for older Ruby versions and alternative Ruby implementations that
-doesn't support refinements (yet).
+don't support refinements (yet).
   EOS
 
   begin

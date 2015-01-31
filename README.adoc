@@ -20,7 +20,7 @@ image:https://img.shields.io/gem/v/{gem-name}.svg?style={badge-style}[Gem Versio
 image:https://img.shields.io/badge/yard-docs-blue.svg?style={badge-style}[Yard Docs, link="http://www.rubydoc.info/github/{gh-name}/frames"]
 
 Corefines is a collection of general purpose _refinements_ for extending the core capabilities of Ruby’s built-in classes.
-It also provides a compatibility mode for older Ruby versions and alternative Ruby implementations that doesn’t support refinements (yet).
+It also provides a compatibility mode for older Ruby versions and alternative Ruby implementations that don’t support refinements (yet).
 
 
 == Why refinements?
@@ -53,10 +53,10 @@ First, you must require `corefines` prior using:
 [source]
 require 'corefines'
 
-This will _not_ activate any extensions (just registers them), even when running in compatibility mode.
-Extensions (refinements) are activated selectively with http://ruby-doc.org/core-2.2.0/Module.html#method-i-using[using] method.
+This will _not_ activate any extensions (just register them), even when running in compatibility mode.
+Extensions (refinements) are activated selectively with the method http://ruby-doc.org/core-2.2.0/Module.html#method-i-using[`using`].
 
-Refinements are organized in modules by a class which it refines, and by a method which it adds.
+Refinements are organized into modules by class which they refine, and further into submodules for individual methods.
 When an extension refines multiple classes, then it’s included in a module named after their nearest common ancestor (superclass).
 
 [source, plain]
