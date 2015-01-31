@@ -133,11 +133,108 @@ module Corefines
       end
     end
 
+    ##
+    # @!method try(method, *args, &block)
+    #   Invokes the public method identified by the symbol +method+, passing it
+    #   any arguments and/or the block specified, just like the regular Ruby
+    #   +public_send+ does.
+    #
+    #   *Unlike* that method however, a +NoMethodError+ exception will *not* be
+    #   be raised and +nil+ will be returned instead, if the receiving object
+    #   doesn't respond to the +method+.
+    #
+    #   This method is defined to be able to write:
+    #
+    #     @person.try(:name)
+    #
+    #   instead of:
+    #
+    #     @person.name if @person
+    #
+    #   +try+ calls can be chained:
+    #
+    #     @person.try(:spouse).try(:name)
+    #
+    #   instead of:
+    #
+    #     @person.spouse.name if @person && @person.spouse
+    #
+    #   +try+ will also return +nil+ if the receiver does not respond to the
+    #   method:
+    #
+    #     @person.try(:unknown_method) # => nil
+    #
+    #   instead of:
+    #
+    #     @person.unknown_method if @person.respond_to?(:unknown_method) # => nil
+    #
+    #   +try+ returns +nil+ when called on +nil+ regardless of whether it
+    #   responds to the method:
+    #
+    #     nil.try(:to_i) # => nil, rather than 0
+    #
+    #   Arguments and blocks are forwarded to the method if invoked:
+    #
+    #     @posts.try(:each_slice, 2) do |a, b|
+    #       ...
+    #     end
+    #
+    #   The number of arguments in the signature must match. If the object
+    #   responds to the method, the call is attempted and +ArgumentError+ is
+    #   still raised in case of argument mismatch.
+    #
+    #   Please also note that +try+ is defined on +Object+. Therefore, it won't
+    #   work with instances of classes that do not have +Object+ among their
+    #   ancestors, like direct subclasses of +BasicObject+. For example, using
+    #   +try+ with +SimpleDelegator+ will delegate +try+ to the target instead
+    #   of calling it on the delegator itself.
+    #
+    #   @param method [Symbol] name of the method to invoke.
+    #   @param args arguments to pass to the +method+.
+    #   @return [Object, nil] result of calling the +method+, or +nil+ if
+    #     doesn't respond to it.
+    #
+    # @!method try!(method, *args, &block)
+    #   Same as {#try}, but raises a +NoMethodError+ exception if the receiver
+    #   is not +nil+ and does not implement the tried method.
+    #
+    #   @example
+    #     "a".try!(:upcase) # => "A"
+    #     nil.try!(:upcase) # => nil
+    #     123.try!(:upcase) # => NoMethodError: undefined method `upcase' for 123:Fixnum
+    #
+    #   @param method (see #try)
+    #   @param args (see #try)
+    #   @return (see #try)
+    #
+    module Try
+      refine ::Object do
+        def try(method = nil, *args, &block)
+          try!(method, *args, &block) if respond_to? method
+        end
+
+        def try!(method = nil, *args, &block)
+          public_send method, *args, &block
+        end
+      end
+
+      refine ::NilClass do
+        def try(*args)
+          nil
+        end
+
+        def try!(*args)
+          nil
+        end
+      end
+    end
+
     include Support::AliasSubmodules
 
     class << self
       alias_method :blank?, :blank
       alias_method :presence, :blank
+      alias_method :try!, :try
     end
   end
 end
