@@ -89,6 +89,23 @@ module Corefines
     end
 
     ##
+    # @!method else
+    #   Returns +self+ if +self+ evaluates to +true+, otherwise returns the
+    #   evaluation of the block.
+    #
+    #   @yield [self] gives +self+ to the block.
+    #   @return [Object] +self+ if +self+ evaluates to +true+, otherwise
+    #     returns the evaluation of the block.
+    #
+    module Else
+      refine ::Object do
+        def else
+          self ? self : yield(self)
+        end
+      end
+    end
+
+    ##
     # @!method instance_values
     #   @example
     #     class C
