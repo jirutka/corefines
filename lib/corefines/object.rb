@@ -116,16 +116,41 @@ module Corefines
 
     ##
     # @!method then
-    #   Passes +self+ to the block and returns its result.
+    #   Returns +self+ if +self+ evaluate to +false+, otherwise returns
+    #   evaluation of the block.
     #
-    #   @yield [self] Passes +self+ to the block.
+    #   This simplifies something like:
+    #
+    #     if m = "Flynn <flynn@encom.com>".match(/<([^>]+)>/)
+    #       m[1]
+    #     end
+    #
+    #   to:
+    #
+    #     "Flynn <flynn@encom.com>".match(/<([^>]+)>/).then { |m| m[1] }
+    #
+    #
+    #   Since +then+ passes +self+ to the block, it can be also used for
+    #   chaining, so something like:
+    #
+    #     html = parse_html(input)
+    #     html = find_nodes(html, "//section")
+    #     html = remove_nodes(html, "//p")
+    #
+    #   can be rewritten to:
+    #
+    #     parse_html(input)
+    #       .then { |h| find_nodes(h, "//section") }
+    #       .then { |h| remove_nodes(h, "//p") }
+    #
+    #   @yield [self] gives +self+ to the block.
     #   @return [Object] evaluation of the block, or +self+ if no block given
-    #     or +self+ is +nil+.
+    #     or +self+ evaluates to false.
     #
     module Then
       refine ::Object do
         def then
-          if block_given? && !self.nil?
+          if block_given? && self
             yield self
           else
             self
