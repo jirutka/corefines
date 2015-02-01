@@ -31,6 +31,45 @@ module Corefines
     end
 
     ##
+    # @!method remove(*patterns)
+    #   Returns a copy of this string with the _all_ occurrences of the
+    #   +patterns+ removed.
+    #
+    #   The pattern is typically a +Regexp+; if given as a +String+, any
+    #   regular expression metacharacters it contains will be interpreted
+    #   literally, e.g. +'\\d'+ will match a backlash followed by 'd', instead
+    #   of a digit.
+    #
+    #   @example
+    #     str = "This is a good day to die"
+    #     str.remove(" to die") # => "This is a good day"
+    #     str.remove(/\s*to.*$/) # => "This is a good day"
+    #     str.remove("to die", /\s*$/) # => "This is a good day"
+    #
+    #   @param *patterns [Regexp, String] patterns to remove from the string.
+    #   @return [String] a new string.
+    #
+    # @!method remove!(*patterns)
+    #   Removes all the occurrences of the +patterns+ in place.
+    #
+    #   @see #remove
+    #   @param *patterns (see #remove)
+    #   @return [String] self
+    #
+    module Remove
+      refine ::String do
+        def remove(*patterns)
+          dup.remove!(*patterns)
+        end
+
+        def remove!(*patterns)
+          patterns.each { |pattern| gsub!(pattern, '') }
+          self
+        end
+      end
+    end
+
+    ##
     # @!method unindent
     #   Remove excessive indentation. Useful for multi-line strings embeded in
     #   already indented code.
@@ -70,6 +109,7 @@ module Corefines
 
     class << self
       alias_method :concat!, :concat
+      alias_method :remove!, :remove
     end
   end
 end
