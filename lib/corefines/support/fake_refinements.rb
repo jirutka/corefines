@@ -48,7 +48,7 @@ module Corefines
             end
 
           else
-            fail ArgumentError, "#{mod} doesn't define any refinements"
+            warn "corefines: #{mod} doesn't define any refinements."
           end
 
           self

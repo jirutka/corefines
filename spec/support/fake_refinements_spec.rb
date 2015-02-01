@@ -53,7 +53,7 @@ describe Corefines::Support::FakeRefinements do
     end
 
     context "module with no refines" do
-      it { expect { using F }.to raise_error ArgumentError }
+      it { expect { using F }.to output(/F doesn't define any refinements/).to_stderr }
     end
 
     context "module with refines" do
