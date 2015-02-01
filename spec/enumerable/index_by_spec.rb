@@ -1,5 +1,5 @@
-describe Array do
-  using Corefines::Array::index_by
+describe Enumerable do
+  using Corefines::Enumerable::index_by
 
   describe '#index_by' do
 

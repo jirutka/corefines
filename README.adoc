@@ -100,11 +100,11 @@ TODO
 == List of refinements
 
 * {doc-base-url}/Array[Array]
-** {doc-base-url}/Array/IndexBy[#index_by]
-** {doc-base-url}/Array/MapSend[#map_send]
 ** {doc-base-url}/Array/Wrap[.wrap]
+* {doc-base-url}/Enumerable[Enumerable]
+** {doc-base-url}/Enumerable/IndexBy[#index_by]
+** {doc-base-url}/Enumerable/MapSend[#map_send]
 * {doc-base-url}/Hash[Hash]
-** {doc-base-url}/Hash/MapSend[#map_send]
 ** {doc-base-url}/Hash/OpPlus[#+]
 * {doc-base-url}/Module[Module]
 ** {doc-base-url}/Module/AliasClassMethod[#alias_class_method]
@@ -118,8 +118,6 @@ TODO
 ** {doc-base-url}/Object/ThenIf[#then_if]
 ** {doc-base-url}/Object/Try[#try]
 ** {doc-base-url}/Object/Try[#try!]
-* {doc-base-url}/Set[Set]
-** {doc-base-url}/Set/MapSend[#map_send]
 * {doc-base-url}/String[String]
 ** {doc-base-url}/String/Concat[#concat]
 ** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
