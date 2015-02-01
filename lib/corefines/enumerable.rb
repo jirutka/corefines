@@ -25,27 +25,16 @@ module Corefines
     #     people.index_by.each(&:login)
     #     => { "flynn" => <Person @login="flynn">, "bradley" => <Person @login="bradley">, ...}
     #
-    #   @overload index_by
-    #     @return [Enumerator]
-    #
-    #   @overload index_by
-    #     @yield [obj] gives each element to the block.
-    #     @yieldreturn the key to be used to map to the value.
-    #     @return [Hash]
+    #   @yield [obj] gives each element to the block.
+    #   @yieldreturn the key to be used to map to the value.
+    #   @return [Hash]
     #
     module IndexBy
       CLASSES.each do |klass|
 
         refine klass do
           def index_by
-            if block_given?
-              ::Hash[map { |elem| [ yield(elem), elem ] }]
-            else
-              # Why can't use #enum_for here, because refinement is not active in this context.
-              ::Enumerator.new do |y|
-                ::Hash[map { |elem| [ y.yield(elem), elem ] }]
-              end
-            end
+            ::Hash[map { |elem| [ yield(elem), elem ] }]
           end
         end
       end
