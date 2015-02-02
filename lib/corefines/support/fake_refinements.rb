@@ -58,28 +58,35 @@ module Corefines
         end
         target.send(:private, :using)
       end
+
+      def self.alias_private_method(klass, new_name, old_name)
+        return if !klass.private_method_defined?(old_name) ||
+          klass.private_method_defined?(new_name)
+
+        klass.send(:alias_method, new_name, old_name)
+      end
     end
   end
 end
 
 
-unless Module.private_method_defined?(:using)
+# If Module doesn't define method +using+, then refinements are apparently not
+# supported on this platform, or running on MRI 2.0 that allows +using+ only on
+# top-level. Since refinements in MRI 2.0 are experimental and behaves
+# differently than in later versions, we use "faked refinements" even so.
+unless Module.private_method_defined? :using
 
-  # Refinements in MRI 2.0 allows calling 'using' only on top-level.
-  if self.respond_to?(:using, true) && Module.private_method_defined?(:refine)
-    warn "corefines: Your Ruby allows activiting refinements at top-level only, so 'using' at \
-class/module/method level will fallback to plain monkey-patching (not scoped!)."
+  warn "corefines: Your Ruby doesn't support refinements, so I'll fake them \
+using plain monkey-patching (not scoped!)."
 
-    Corefines::Support::FakeRefinements.define_using(Module)
+  m = Corefines::Support::FakeRefinements
 
-    unless Module.private_method_defined?(:__refine__)
-      Module.send(:alias_method, :__refine__, :refine)
-    end
-  else
-    warn "corefines: Your Ruby doesn't support refinements, so I'll fake them using plain \
-monkey-patching (not scoped!)."
-    Corefines::Support::FakeRefinements.define_using(Object)
+  # Define using on Module and the main object.
+  [Module, self.singleton_class].each do |klass|
+    m.alias_private_method(klass, :__using__, :using)
+    m.define_using(klass)
   end
 
-  Corefines::Support::FakeRefinements.define_refine(Module)
+  m.alias_private_method(Module, :__refine__, :refine)
+  m.define_refine(Module)
 end

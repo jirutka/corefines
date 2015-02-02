@@ -4,25 +4,15 @@ describe Corefines::Support::FakeRefinements do
     if Module.private_method_defined? :refine
       Module.send(:alias_method, :_old_refine, :refine)
     end
-
-    [Object, Module].each do |klass|
-      next unless klass.private_method_defined? :using
-      klass.send(:alias_method, :_old_using, :using)
-    end
-
-    Corefines::Support::FakeRefinements.define_using(Object)
-    Corefines::Support::FakeRefinements.define_refine(Module)
+    described_class.define_refine(Module)
+    described_class.define_using(Object)
   end
 
   after :all do
-    [Object, Module].each do |klass|
-      next unless klass.private_method_defined? :_old_using
-      klass.send(:alias_method, :using, :_old_using)
-    end
-
     if Module.private_method_defined? :_old_refine
       Module.send(:alias_method, :refine, :_old_refine)
     end
+    Object.send(:remove_method, :using)
   end
 
   before(:each) { F = create_fixture_modules }
