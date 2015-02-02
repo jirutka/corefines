@@ -12,12 +12,17 @@ module Corefines
     #
     module FakeRefinements
 
+      MUTEX = Mutex.new
+      private_constant :MUTEX
+
       def self.define_refine(target)
         target.send(:define_method, :refine) do |klass, &block|
           fail TypeError, "wrong argument type #{klass.class} (expected Class)" unless klass.is_a? ::Class
           fail ArgumentError, "no block given" unless block
 
-          (@__pending_refinements ||= []) << [klass, block]
+          MUTEX.synchronize do
+            (@__pending_refinements ||= []) << [klass, block]
+          end
           __refine__(klass) { module_eval &block } if respond_to?(:__refine__, true)
 
           self
@@ -27,27 +32,25 @@ module Corefines
 
       def self.define_using(target)
         target.send(:define_method, :using) do |mod|
-          # TODO make it thread-safe
+          refinements = mod.instance_variable_get(:@__pending_refinements)
 
-          if mod.instance_variable_defined? :@__pending_refinements
-            refinements = mod.instance_variable_get(:@__pending_refinements)
-
-            return self if refinements.empty?
-
-            refinements.each do |klass, block|
-              klass.class_eval &block
+          if refinements && !refinements.empty?
+            MUTEX.synchronize do
+              refinements.delete_if do |klass, block|
+                klass.class_eval &block
+                true
+              end
             end
+          end
 
-            mod.instance_variable_set(:@__pending_refinements, [])
-
-          elsif mod.include? ::Corefines::Support::AliasSubmodules
+          if mod.include? ::Corefines::Support::AliasSubmodules
             # Evaluate refinements from submodules recursively.
             mod.constants.each do |const|
               submodule = mod.const_get(const)
               using submodule if submodule.instance_of? ::Module
             end
 
-          else
+          elsif refinements.nil?
             warn "corefines: #{mod} doesn't define any refinements."
           end
 
