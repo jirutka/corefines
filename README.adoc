@@ -110,6 +110,7 @@ TODO
 ** {doc-base-url}/Hash/OpPlus[#+]
 * {doc-base-url}/Module[Module]
 ** {doc-base-url}/Module/AliasClassMethod[#alias_class_method]
+** {doc-base-url}/Module/AliasMethodChain[#alias_method_chain]
 * {doc-base-url}/Object[Object]
 ** {doc-base-url}/Object/Blank[#blank?]
 ** {doc-base-url}/Object/Blank[#presence]
