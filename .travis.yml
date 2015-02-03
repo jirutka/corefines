@@ -13,7 +13,7 @@ rvm:
   - jruby-head
 matrix:
   allow_failures:
-    - rvm: ruby-head
+    - rvm: rbx-2.2
     - rvm: jruby-head
 addons:
   code_climate:
