@@ -67,28 +67,28 @@ Corefines::<CLASS>::<METHOD>
 A single extension can be imported into the current scope classically, e.g.:
 
 [source]
-using Corefines::Hash::MapSend
+using Corefines::Object::ThenIf
 
 or preferably using its “alias”:
 
 [source]
-using Corefines::Hash::map_send
+using Corefines::Object::then_if
 
 If you want to include all extensions for the class, then you can just import the parent module, e.g.:
 
 [source]
-using Corefines::Hash
+using Corefines::Object
 
 But more often you want to include multiple extensions for the class, but not all of them, e.g.:
 
 [source]
-using Corefines::Hash::map_send
-using Corefines::Hash::+
+using Corefines::Object::then_if
+using Corefines::Object::in?
 
 this can be abbreviated to:
 
 [source]
-using Corefines::Hash[:map_send, :+]
+using Corefines::Object[:then_if, :in?]
 
 Refinements can be activated (with `using`) at top-level (per file), inside a class, module or a method.
 
