@@ -38,6 +38,9 @@ module Corefines
     #   @return [Object, nil] object if it's not {#blank?}, otherwise +nil+.
     #
     module Blank
+
+      BLANK_RE = /\A[[:space:]]*\z/
+
       refine ::Object do
         def blank?
           respond_to?(:empty?) ? !!empty? : !self
@@ -81,8 +84,6 @@ module Corefines
       end
 
       refine ::String do
-        BLANK_RE = /\A[[:space:]]*\z/
-
         def blank?
           BLANK_RE === self
         end
