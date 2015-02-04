@@ -1,4 +1,5 @@
 require 'corefines/support/alias_submodules'
+require 'set'
 
 module Corefines
   module Object
@@ -84,6 +85,45 @@ module Corefines
 
         def blank?
           BLANK_RE === self
+        end
+      end
+    end
+
+    ##
+    # @!method deep_dup
+    #   Returns a deep copy of itself.
+    #
+    #   If +self+ is an instance of +Array+, +Set+ or +Hash+, then it
+    #   recursively copies its elements as well. If a nested object responds to
+    #   +deep_dup+ (note: +respond_to?+ doesn't see refined methods), then it
+    #   use it.
+    #
+    #   @return [Object] a copy of +self+, or +self+ if it's not duplicable.
+    #
+    module DeepDup
+      refine ::Object do
+        # NOTE: Refinement is not active inside itself, so we can't simply call
+        # deep_dup on a nested object like ActiveSupport does. Thus we must use
+        # this ugly approach instead...
+        def deep_dup(obj = self)
+          return obj.deep_dup if obj != self && obj.respond_to?(:deep_dup)
+
+          case obj
+          when ::NilClass, ::FalseClass, ::TrueClass, ::Symbol, ::Numeric, ::Method
+            obj  # not duplicable
+          when ::Array
+            obj.map { |o| deep_dup(o) }
+          when ::Set
+            ::Set[obj.map { |o| deep_dup(o) }]
+          when ::Hash
+            obj.each_with_object({}) { |(k, v), h| h[deep_dup(k)] = deep_dup(v) }
+          else
+            begin
+              obj.dup
+            rescue TypeError, NoMethodError
+              obj
+            end
+          end
         end
       end
     end
