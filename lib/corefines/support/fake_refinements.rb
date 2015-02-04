@@ -43,15 +43,9 @@ module Corefines
             end
           end
 
-          if mod.include? ::Corefines::Support::AliasSubmodules
-            # Evaluate refinements from submodules recursively.
-            mod.constants.each do |const|
-              submodule = mod.const_get(const)
-              using submodule if submodule.instance_of? ::Module
-            end
-
-          elsif refinements.nil?
-            warn "corefines: #{mod} doesn't define any refinements."
+          # Evaluate refinements from submodules recursively.
+          mod.included_modules.each do |submodule|
+            using submodule
           end
 
           self

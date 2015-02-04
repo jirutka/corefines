@@ -43,7 +43,9 @@ describe Corefines::Support::FakeRefinements do
     end
 
     context "module with no refines" do
-      it { expect { using F }.to output(/F doesn't define any refinements/).to_stderr }
+      it "does nothing" do
+        using F
+      end
     end
 
     context "module with refines" do
@@ -61,10 +63,10 @@ describe Corefines::Support::FakeRefinements do
       end
     end
 
-    context "module that includes AliasSubmodules" do
+    context "module that includes another modules" do
 
       before do
-        F::Refs.send(:include, Corefines::Support::AliasSubmodules)
+        F::Refs.send(:include, F::Refs::A, F::Refs::B)
       end
 
       it "evals refinements from submodules recursively" do
