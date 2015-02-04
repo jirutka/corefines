@@ -90,6 +90,11 @@ this can be abbreviated to:
 [source]
 using Corefines::Object[:then_if, :in?]
 
+If you feel that _Corefines_ is too long, then you can also use abbreviation _CF_ instead:
+
+[source]
+using CF::Object::then_if
+
 Refinements can be activated (with `using`) at top-level (per file), inside a class, module or a method.
 
 
