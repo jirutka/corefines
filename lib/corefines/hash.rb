@@ -52,10 +52,44 @@ module Corefines
       end
     end
 
+    ##
+    # @!method symbolize_keys
+    #   @example
+    #     hash = { 'name' => 'Lindsey', :born => 1986 }
+    #     hash.symbolize_keys # => { :name => 'Lindsey', :born => 1986 }
+    #     hash # => { 'name' => 'Lindsey', :born => 1986 }
+    #
+    #   @return [Hash] a new hash with all keys converted to symbols, as long
+    #     as they respond to +to_sym+.
+    #
+    # @!method symbolize_keys!
+    #   Converts all keys to symbols, as long as they respond to +to_sym+.
+    #   Same as {#symbolize_keys}, but modifies +self+.
+    #
+    #   @return [Hash] self
+    #
+    module SymbolizeKeys
+      refine ::Hash do
+        def symbolize_keys
+          each_with_object(dup.clear) do |(key, value), hash|
+            hash[(key.to_sym rescue key)] = value
+          end
+        end
+
+        def symbolize_keys!
+          keys.each do |key|
+            self[(key.to_sym rescue key)] = delete(key)
+          end
+          self
+        end
+      end
+    end
+
     include Support::AliasSubmodules
 
     class << self
       alias_method :compact!, :compact
+      alias_method :symbolize_keys!, :symbolize_keys
     end
   end
 end
