@@ -105,8 +105,6 @@ TODO
 
 == List of refinements
 
-* {doc-base-url}/Array[Array]
-** {doc-base-url}/Array/Wrap[.wrap]
 * {doc-base-url}/Enumerable[Enumerable]
 ** {doc-base-url}/Enumerable/IndexBy[#index_by]
 ** {doc-base-url}/Enumerable/MapSend[#map_send]
