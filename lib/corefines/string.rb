@@ -111,6 +111,22 @@ module Corefines
     end
 
     ##
+    # @!method decolor
+    #   @return [String] a copy of this string without ANSI escape codes
+    #     (e.g. colors).
+    #   @see Color#color
+    #
+    module Decolor
+      refine ::String do
+        def decolor
+          scan(ESCAPE_SEQUENCE).reduce('') do |str, match|
+            str << (match[3] || match[4])
+          end
+        end
+      end
+    end
+
+    ##
     # @!method remove(*patterns)
     #   Returns a copy of this string with the _all_ occurrences of the
     #   +patterns+ removed.

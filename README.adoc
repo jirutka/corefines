@@ -129,6 +129,7 @@ TODO
 * {doc-base-url}/String[String]
 ** {doc-base-url}/String/Color[#color]
 ** {doc-base-url}/String/Concat[#concat]
+** {doc-base-url}/String/Decolor[#decolor]
 ** {doc-base-url}/String/Remove[#remove]
 ** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
 * {doc-base-url}/Symbol[Symbol]
