@@ -3,6 +3,86 @@ require 'corefines/support/alias_submodules'
 module Corefines
   module String
 
+    ESCAPE_SEQUENCE = /\033\[([0-9]+);([0-9]+);([0-9]+)m(.+?)\033\[0m|([^\033]+)/m
+    private_constant :ESCAPE_SEQUENCE
+
+    ##
+    # @!method color
+    #   @example
+    #     "Roses are red".color(:red) # => "\e[0;31;49mRoses are red\e[0m"
+    #     "Roses are red".color(text: :red, mode: :bold) # => "\e[1;31;49mRoses are red\e[0m"
+    #     "Violets are blue".color(background: 'blue') # => "\e[0;39;44mViolets are blue\e[0m"
+    #     "Sugar is sweet".color(text: 7) # => "\e[0;37;49mSugar is sweet\e[0m"
+    #
+    #   @overload color(text_color)
+    #     @param text_color [#to_sym, Fixnum] text (foreground) color (see
+    #            {COLOR_CODES}).
+    #
+    #   @overload color(opts)
+    #     @option opts [#to_sym, Fixnum] :mode text attributes (see
+    #             {MODE_CODES}).
+    #     @option opts [#to_sym, Fixnum] :text,:fg text (foreground) color (see
+    #             {COLOR_CODES}).
+    #     @option opts [#to_sym, Fixnum] :background,:bg background color (see
+    #             {COLOR_CODES}).
+    #
+    #   @return [String] a copy of this string colored for command line output
+    #           using ANSI escape codes.
+    #   @see Decolor#decolor
+    #
+    module Color
+
+      COLOR_CODES = {
+        black:   0, light_black:   60,
+        red:     1, light_red:     61,
+        green:   2, light_green:   62,
+        yellow:  3, light_yellow:  63,
+        blue:    4, light_blue:    64,
+        magenta: 5, light_magenta: 65,
+        cyan:    6, light_cyan:    66,
+        white:   7, light_white:   67,
+        default: 9
+      }
+
+      MODE_CODES = {
+        default:   0,  # Turn off all attributes.
+        bold:      1,  # Set bold mode.
+        underline: 4,  # Set underline mode.
+        blink:     5,  # Set blink mode.
+        swap:      7,  # Exchange foreground and background colors.
+        hide:      8   # Hide text (foreground color would be the same as background).
+      }
+
+      refine ::String do
+        def color(opts)
+          opts = {text: opts} unless opts.is_a? ::Hash
+          opts[:fg] ||= opts[:text] || opts[:color]
+          opts[:bg] ||= opts[:background]
+
+          scan(ESCAPE_SEQUENCE).reduce('') do |str, match|
+            mode     = Color.mode_code(opts[:mode])    || match[0] || 0
+            fg_color = Color.color_code(opts[:fg], 30) || match[1] || 39
+            bg_color = Color.color_code(opts[:bg], 40) || match[2] || 49
+            text     = match[3] || match[4]
+
+            str << "\033[#{mode};#{fg_color};#{bg_color}m#{text}\033[0m"
+          end
+        end
+      end
+
+      private
+
+      def self.color_code(color, offset)
+        return color + offset if color.is_a? ::Fixnum
+        COLOR_CODES[color.to_sym] + offset if color && COLOR_CODES[color.to_sym]
+      end
+
+      def self.mode_code(mode)
+        return mode if mode.is_a? ::Fixnum
+        MODE_CODES[mode.to_sym] if mode
+      end
+    end
+
     ##
     # @!method concat!(obj, separator = nil)
     #   Appends (concatenates) the given object to +str+. If the +separator+ is

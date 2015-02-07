@@ -127,6 +127,7 @@ TODO
 ** {doc-base-url}/Object/Try[#try]
 ** {doc-base-url}/Object/Try[#try!]
 * {doc-base-url}/String[String]
+** {doc-base-url}/String/Color[#color]
 ** {doc-base-url}/String/Concat[#concat]
 ** {doc-base-url}/String/Remove[#remove]
 ** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
@@ -140,6 +141,7 @@ Most of the extension methods are based on, or highly inspired from:
 
 * https://github.com/rails/rails/tree/master/activesupport[Active Support (Ruby extensions)]
 * https://github.com/rubyworks/facets[Ruby Facets]
+* https://github.com/fazibear/colorize[colorize]
 
 Very useful articles about refinements and how to “trick” them:
 
