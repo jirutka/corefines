@@ -131,6 +131,8 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/Enumerable/IndexBy[#index_by]
 ** {doc-base-url}/Enumerable/MapSend[#map_send]
 * {doc-base-url}/Hash[Hash]
+** {doc-base-url}/Hash/Compact[#compact]
+** {doc-base-url}/Hash/Compact[#compact!]
 ** {doc-base-url}/Hash/OpPlus[#+]
 * {doc-base-url}/Module[Module]
 ** {doc-base-url}/Module/AliasClassMethod[#alias_class_method]

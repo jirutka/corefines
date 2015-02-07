@@ -2,6 +2,35 @@ require 'corefines/support/alias_submodules'
 
 module Corefines
   module Hash
+
+    ##
+    # @!method compact
+    #   @example
+    #     hash = { a: true, b: false, c: nil }
+    #     hash.compact # => { a: true, b: false }
+    #     hash # => { a: true, b: false, c: nil }
+    #     { c: nil }.compact # => {}
+    #
+    #   @return [Hash] a new hash with no key-value pairs which value is +nil+.
+    #
+    # @!method compact!
+    #   Removes all key-value pairs from the hash which value is +nil+.
+    #   Same as {#compact}, but modifies +self+.
+    #
+    #   @return [Hash] self
+    #
+    module Compact
+      refine ::Hash do
+        def compact
+          reject { |_, value| value.nil? }
+        end
+
+        def compact!
+          delete_if { |_, value| value.nil? }
+        end
+      end
+    end
+
     ##
     # @!method +(other_hash)
     #   Alias for +#merge+.
@@ -24,5 +53,9 @@ module Corefines
     end
 
     include Support::AliasSubmodules
+
+    class << self
+      alias_method :compact!, :compact
+    end
   end
 end
