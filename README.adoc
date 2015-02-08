@@ -160,6 +160,7 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
 * {doc-base-url}/Symbol[Symbol]
 ** {doc-base-url}/Symbol/OpTilde[#~]
+** {doc-base-url}/Symbol/Call[#call]
 
 
 == Acknowledgement
