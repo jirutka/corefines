@@ -53,6 +53,74 @@ module Corefines
     end
 
     ##
+    # @!method rekey(key_map = nil, &block)
+    #   Returns a new hash with keys transformed according to the given
+    #   +key_map+ or the +block+.
+    #
+    #   If no +key_map+ or +block+ is given, then all keys are converted
+    #   to +Symbols+, as long as they respond to +to_sym+.
+    #
+    #   @example
+    #     hash = { :a => 1, 'b' => 2 }
+    #     hash.rekey(:a => :x, :c => :y) # => { :x => 1, 'b' => 2 }
+    #     hash.rekey(&:to_s) # => { 'a' => 1, 'b' => 2 }
+    #     hash.rekey { |k| k.to_s.upcase } # => { 'A' => 1, 'B' => 2 }
+    #     hash.rekey # => { :a => 1, :b => 2 }
+    #
+    #   @overload rekey(key_map)
+    #     @param key_map [Hash] a translation map from the old keys to the new
+    #       keys; <tt>{from_key => to_key, ...}</tt>.
+    #
+    #   @overload rekey
+    #     @yield [key, value] gives every key-value pair to the block.
+    #       The return value becomes a new key.
+    #
+    #   @return [Hash] a new hash.
+    #   @raise ArgumentError if both +key_map+ and the +block+ are given.
+    #
+    # @!method rekey!(key_map = nil, &block)
+    #   Transforms keys according to the given +key_map+ or the +block+.
+    #   Same as {#rekey}, but modifies +self+.
+    #
+    #   @overload rekey!(key_map)
+    #     @param key_map [Hash] a translation map from the old keys to the new
+    #       keys; <tt>{from_key => to_key, ...}</tt>.
+    #
+    #   @overload rekey!
+    #     @yield [key, value] gives every key-value pair to the block.
+    #       The return value becomes a new key.
+    #
+    #   @return [Hash] self
+    #   @raise (see #rekey)
+    #
+    module Rekey
+      refine ::Hash do
+        def rekey(key_map = nil, &block)
+          fail ArgumentError, "provide key_map, or block, not both" if key_map && block
+          block = ->(k, _) { k.to_sym rescue k } if !key_map && !block
+
+          # Note: self.dup is used to preserve the default_proc.
+          if block
+            # This is needed for "symbol procs" (e.g. &:to_s).
+            transform_key = block.arity.abs == 1 ? ->(k, _) { block[k] } : block
+
+            each_with_object(dup.clear) do |(key, value), hash|
+              hash[ transform_key[key, value] ] = value
+            end
+          else
+            key_map.each_with_object(dup) do |(from, to), hash|
+              hash[to] = hash.delete(from) if hash.key? from
+            end
+          end
+        end
+
+        def rekey!(key_map = nil, &block)
+          replace rekey(key_map, &block)
+        end
+      end
+    end
+
+    ##
     # @!method symbolize_keys
     #   @example
     #     hash = { 'name' => 'Lindsey', :born => 1986 }
@@ -89,6 +157,7 @@ module Corefines
 
     class << self
       alias_method :compact!, :compact
+      alias_method :rekey!, :rekey
       alias_method :symbolize_keys!, :symbolize_keys
     end
   end

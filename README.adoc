@@ -134,6 +134,8 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/Hash/OpPlus[#+]
 ** {doc-base-url}/Hash/Compact[#compact]
 ** {doc-base-url}/Hash/Compact[#compact!]
+** {doc-base-url}/Hash/Rekey[#rekey]
+** {doc-base-url}/Hash/Rekey[#rekey!]
 ** {doc-base-url}/Hash/SymbolizeKeys[#symbolize_keys]
 ** {doc-base-url}/Hash/SymbolizeKeys[#symbolize_keys!]
 * {doc-base-url}/Module[Module]
