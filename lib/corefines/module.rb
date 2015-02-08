@@ -13,7 +13,7 @@ module Corefines
     module AliasClassMethod
       refine ::Module do
         def alias_class_method(new_name, old_name)
-          singleton_class.send(:alias_method, new_name, old_name)
+          singleton_class.__send__(:alias_method, new_name, old_name)
           self
         end
       end

@@ -57,7 +57,7 @@ module Corefines
 
         refine klass do
           def map_send(method_name, *args, &block)
-            map { |e| e.send(method_name, *args, &block) }
+            map { |e| e.__send__(method_name, *args, &block) }
           end
         end
       end
