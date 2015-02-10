@@ -100,7 +100,7 @@ Refinements can be activated (with `using`) at top-level (per file), inside a cl
 
 == Compatibility mode
 
-Refinements are still a quite young feature, so there’s a good chance that your gem or application will have to work on a Ruby platform that doesn’t fully support refinements yet.
+Refinements are still a young feature, so there’s a possibility that your gem or application will have to work on a Ruby platform that doesn’t fully support refinements yet.
 
 The main Ruby implementation, https://en.wikipedia.org/wiki/Ruby_MRI[MRI] (aka CRuby), supports refinements since version 2.1.0 (https://www.ruby-lang.org/en/news/2013/12/25/ruby-2-1-0-is-released/[released in 25 Dec 2013]).
 footnote:[Actually, refinements has been introduced to MRI in 2.0.0, as an experimental feature. However, its design and implementation has been changed then, so refinements in 2.0.x and 2.1+ behaves quite differently.]
@@ -108,13 +108,13 @@ Version 2.0.0 (https://www.ruby-lang.org/en/news/2013/02/24/ruby-2-0-0-p0-is-rel
 http://www.jruby.org/[JRuby] doesn’t support refinements yet, it’s planned in the upcoming version 9.0.0.0 (https://github.com/jruby/jruby/issues/1062[#1062]).
 http://rubini.us/[Rubinius] also doesn’t support refinements yet.
 
-This gem is a collection of pure refinements, and yet, it works even on older Rubies that doesn’t support refinements.
+This gem is a collection of pure refinements, and yet, it works even on older Rubies that don’t support refinements.
 
 Wait… how?
-Well, when running on older Ruby, it’s actually cheating.
-Instead of locally scoped changes, it fallbacks to global monkey-patching.
+Well, when you use the gem with an older Ruby, it’s actually cheating.
+Instead of locally scoped changes, it falls back to global monkey-patching.
 
-Corefines adds `refine` and `using` methods to the core classes, so you can define and use refinements just like on newer Rubies.
+The Corefines gem adds `refine` and `using` methods to the core classes, so you can define and use refinements just like in newer Rubies.
 But internally it works very differently.
 The `refine` method adds a given block to a collection of pending “refinements” inside its module.
 When `using` is called _first time_ for the module, it _evaluates_ module’s “refinements” in context of the target classes (i.e. do a monkey-patch).
