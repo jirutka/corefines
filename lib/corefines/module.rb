@@ -4,7 +4,7 @@ module Corefines
   module Module
     ##
     # @!method alias_class_method(new_name, old_name)
-    #   Makes +new_name+ a new copy of the class method +old_name+.
+    #   Makes _new_name_ a new copy of the class method _old_name_.
     #
     #   @param new_name [Symbol] name of the new class method to create.
     #   @param old_name [Symbol] name of the existing class method to alias.

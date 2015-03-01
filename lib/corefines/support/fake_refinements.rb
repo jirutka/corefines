@@ -4,7 +4,7 @@ module Corefines
     # @private
     # Faked Refinements somehow mimics refinements on Ruby engines that doesn't
     # support them yet. It provides the same interface, but actually does just
-    # plain monkey-patching; the changes are _not_ scoped like when using real
+    # plain monkey-patching; the changes are *not* scoped like when using real
     # refinements.
     #
     # It's useful when you want to use refinements, but also need to support

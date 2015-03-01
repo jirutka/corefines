@@ -85,16 +85,16 @@ module Corefines
 
     ##
     # @!method concat!(obj, separator = nil)
-    #   Appends (concatenates) the given object to +str+. If the +separator+ is
-    #   set and this +str+ is not empty, then it appends the +separator+ before
-    #   the +obj+.
+    #   Appends (concatenates) the given object to _str_. If the _separator_ is
+    #   set and this _str_ is not empty, then it appends the _separator_ before
+    #   the _obj_.
     #
     #   @example
     #     "".concat!("Greetings", ", ") # => "Greetings"
     #     "Greetings".concat!("programs!", ", ") #=> "Greetings, programs!"
     #
     #   @param obj [String, Integer] the string, or codepoint to append.
-    #   @param separator [String, nil] the separator to append when this +str+ is
+    #   @param separator [String, nil] the separator to append when this _str_ is
     #          not empty.
     #   @return [String] self
     #
@@ -128,8 +128,8 @@ module Corefines
 
     ##
     # @!method remove(*patterns)
-    #   Returns a copy of this string with the _all_ occurrences of the
-    #   +patterns+ removed.
+    #   Returns a copy of this string with *all* occurrences of the _patterns_
+    #   removed.
     #
     #   The pattern is typically a +Regexp+; if given as a +String+, any
     #   regular expression metacharacters it contains will be interpreted
@@ -146,7 +146,7 @@ module Corefines
     #   @return [String] a new string.
     #
     # @!method remove!(*patterns)
-    #   Removes all the occurrences of the +patterns+ in place.
+    #   Removes all the occurrences of the _patterns_ in place.
     #
     #   @see #remove
     #   @param *patterns (see #remove)

@@ -6,7 +6,7 @@ module Corefines
     ##
     # @!method blank?
     #   An object is blank if it's +false+, empty, or a whitespace string.
-    #   For example, <tt>'', '   ', "\t\n\r", "\u00a0", +nil+, [], {}</tt> are
+    #   For example, <tt>'', '   ', "\t\n\r", "\u00a0", nil, [], {}</tt> are
     #   all blank.
     #
     #   This simplifies
@@ -157,9 +157,9 @@ module Corefines
     #     "x".in?("flynn") # => false
     #
     #   @param other [#include?]
-    #   @return [Boolean] +true+ if this object is included in the +other+
+    #   @return [Boolean] +true+ if this object is included in the _other_
     #     object, +false+ otherwise.
-    #   @raise ArgumentError if the +other+ doesn't respond to +#include?+.
+    #   @raise ArgumentError if the _other_ doesn't respond to +#include?+.
     #
     module In
       refine ::Object do
@@ -244,7 +244,7 @@ module Corefines
 
     ##
     # @!method then_if(*conditions)
-    #   Returns +self+ if +self+ or any of the +conditions+ evaluates to
+    #   Returns +self+ if +self+ or any of the _conditions_ evaluates to
     #   +false+, otherwise returns the evaluation of the block.
     #
     #   @example
@@ -283,13 +283,13 @@ module Corefines
 
     ##
     # @!method try(method, *args, &block)
-    #   Invokes the public method identified by the symbol +method+, passing it
+    #   Invokes the public method identified by the symbol _method_, passing it
     #   any arguments and/or the block specified, just like the regular Ruby
     #   +public_send+ does.
     #
     #   *Unlike* that method however, a +NoMethodError+ exception will *not* be
     #   be raised and +nil+ will be returned instead, if the receiving object
-    #   doesn't respond to the +method+.
+    #   doesn't respond to the _method_.
     #
     #   This method is defined to be able to write:
     #
@@ -338,8 +338,8 @@ module Corefines
     #   of calling it on the delegator itself.
     #
     #   @param method [Symbol] name of the method to invoke.
-    #   @param args arguments to pass to the +method+.
-    #   @return [Object, nil] result of calling the +method+, or +nil+ if
+    #   @param args arguments to pass to the _method_.
+    #   @return [Object, nil] result of calling the _method_, or +nil+ if
     #     doesn't respond to it.
     #
     # @!method try!(method, *args, &block)

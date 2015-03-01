@@ -40,9 +40,9 @@ module Corefines
     #      => {a: 1, b: 3, c: 4}
     #
     #   @param other_hash [Hash]
-    #   @return [Hash] a new hash containing the contents of +other_hash+ and
+    #   @return [Hash] a new hash containing the contents of _other_hash_ and
     #     this hash. The value for entries with duplicate keys will be that of
-    #     +other_hash+.
+    #     _other_hash_.
     #
     module OpPlus
       refine ::Hash do
@@ -55,9 +55,9 @@ module Corefines
     ##
     # @!method rekey(key_map = nil, &block)
     #   Returns a new hash with keys transformed according to the given
-    #   +key_map+ or the +block+.
+    #   _key_map_ or the _block_.
     #
-    #   If no +key_map+ or +block+ is given, then all keys are converted
+    #   If no _key_map_ or _block_ is given, then all keys are converted
     #   to +Symbols+, as long as they respond to +to_sym+.
     #
     #   @example
@@ -76,10 +76,10 @@ module Corefines
     #       The return value becomes a new key.
     #
     #   @return [Hash] a new hash.
-    #   @raise ArgumentError if both +key_map+ and the +block+ are given.
+    #   @raise ArgumentError if both _key_map_ and the _block_ are given.
     #
     # @!method rekey!(key_map = nil, &block)
-    #   Transforms keys according to the given +key_map+ or the +block+.
+    #   Transforms keys according to the given _key_map_ or the _block_.
     #   Same as {#rekey}, but modifies +self+.
     #
     #   @overload rekey!(key_map)

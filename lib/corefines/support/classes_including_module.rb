@@ -9,7 +9,7 @@ module Corefines
     # Results are cached to speed-up repeated calls.
     #
     # @param mod [Module] the module.
-    # @yield [Class] gives each class that includes the +mod+.
+    # @yield [Class] gives each class that includes the _mod_.
     #
     def self.classes_including_module(mod)
       @classes_including_module[mod] ||=
