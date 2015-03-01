@@ -1,12 +1,8 @@
 require 'corefines/support/alias_submodules'
+require 'corefines/support/classes_including_module'
 
 module Corefines
   module Enumerable
-
-    # Classes that includes Enumerable module.
-    CLASSES = ::ObjectSpace.each_object(::Class).select do |klass|
-      klass.include?(::Enumerable)
-    end
 
     ##
     # @!method index_by
@@ -30,7 +26,7 @@ module Corefines
     #   @return [Hash]
     #
     module IndexBy
-      CLASSES.each do |klass|
+      Support.classes_including_module(::Enumerable) do |klass|
 
         refine klass do
           def index_by
@@ -53,7 +49,7 @@ module Corefines
     #   @return [Enumerable]
     #
     module MapSend
-      CLASSES.each do |klass|
+      Support.classes_including_module(::Enumerable) do |klass|
 
         refine klass do
           def map_send(method_name, *args, &block)
