@@ -109,7 +109,6 @@ http://www.jruby.org/[JRuby] doesn’t support refinements yet, it’s planned i
 http://rubini.us/[Rubinius] also doesn’t support refinements yet.
 
 This gem is a collection of pure refinements, and yet, it works even on older Rubies that don’t support refinements.
-
 Wait… how?
 Well, when you use the gem with an older Ruby, it’s actually cheating.
 Instead of locally scoped changes, it falls back to global monkey-patching.
@@ -159,7 +158,6 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/String/Remove[#remove]
 ** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
 * {doc-base-url}/Symbol[Symbol]
-** {doc-base-url}/Symbol/OpTilde[#~]
 ** {doc-base-url}/Symbol/Call[#call]
 
 
