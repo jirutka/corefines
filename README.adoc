@@ -27,6 +27,12 @@ It also provides a <<compatibility-mode>> for older Ruby versions and alternativ
 
 == Why refinements?
 
+Extending core classes with so called monkey-paching pollutes the _global_ scope, so it affects all files on the `$LOAD_PATH`, i.e. whole application including used gems.
+It’s not usually so big deal when you’re doing it in your application, but it’s very dangerous when used in a gem (library).
+This can result in strange and hard to debug behaviour if another gem overrides a core class with the same method as your gem, but different implementation, and both gems are used together.
+
+Refinements basically allows you to put monkey patches in an isolated namespace, so that your changes to core classes don’t affect other code.
+
 TODO
 
 
