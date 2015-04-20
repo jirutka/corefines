@@ -44,7 +44,7 @@ module Corefines
     #     this hash. The value for entries with duplicate keys will be that of
     #     _other_hash_.
     #
-    module OpPlus
+    module OpAdd
       refine ::Hash do
         def +(other_hash)
           merge other_hash
