@@ -26,6 +26,8 @@ module Corefines
     module AliasSubmodules
 
       OPERATORS_MAP = {
+        :op_plus   => :+@,
+        :op_minus  => :-@,
         :op_add    => :+,
         :op_sub    => :-,
         :op_pow    => :**,
