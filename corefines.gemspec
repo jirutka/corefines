@@ -18,7 +18,7 @@ don't support refinements (yet).
   EOS
 
   begin
-    s.files       = `git ls-files -z -- */* {LICENSE,Rakefile,README}*`.split("\x0")
+    s.files       = `git ls-files -z -- */* {CHANGELOG,LICENSE,Rakefile,README}*`.split("\x0")
   rescue
     s.files       = Dir['**/*']
   end

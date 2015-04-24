@@ -1,0 +1,15 @@
+= Corefines Changelog
+:repo-uri: https://github.com/jirutka/corefines
+:doc-base-url: http://www.rubydoc.info/github/jirutka/corefines/Corefines
+:issue-uri: {repo-uri}/issues
+
+== 1.1.0 (2015-04-25)
+
+* Add new refinement {doc-base-url}/String/ToB[String#to_b].
+* Change alias for operator `+` from `OpPlus` to `OpAdd` and for operator `-` from `OpMinus` to `OpSub`.
+* Support operators `+@` (alias `OpPlus`) and `-@` (alias `OpMinus`).
+
+
+== 1.0.0 (2015-04-02)
+
+The first stable release.
