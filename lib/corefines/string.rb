@@ -166,6 +166,33 @@ module Corefines
     end
 
     ##
+    # @!method to_b
+    #   Interprets common affirmative string meanings as +true+, otherwise
+    #   +false+. White spaces and case are ignored.
+    #
+    #   The following strings are interpreted as +true+:
+    #   <tt>'true', 'yes', 'on', 't', 'y', '1'</tt>.
+    #
+    #   @example
+    #     'yes'.to_b   #=> true
+    #     'Yes '.to_b  #=> true
+    #     ' t '.to_b   #=> true
+    #     'no'.to_b    #=> false
+    #     'xyz'.to_b   #=> false
+    #     ''.to_b      #=> false
+    #
+    #   @return [Boolean] +true+ if this string represents truthy,
+    #     +false+ otherwise.
+    #
+    module ToB
+      refine ::String do
+        def to_b
+          %w[true yes on t y 1].include? self.downcase.strip
+        end
+      end
+    end
+
+    ##
     # @!method unindent
     #   Remove excessive indentation. Useful for multi-line strings embeded in
     #   already indented code.

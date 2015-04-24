@@ -162,6 +162,7 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/String/Concat[#concat]
 ** {doc-base-url}/String/Decolor[#decolor]
 ** {doc-base-url}/String/Remove[#remove]
+** {doc-base-url}/String/ToB[#to_b]
 ** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
 * {doc-base-url}/Symbol[Symbol]
 ** {doc-base-url}/Symbol/Call[#call]
