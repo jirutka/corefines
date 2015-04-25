@@ -127,6 +127,50 @@ module Corefines
     end
 
     ##
+    # @!method indent(amount, indent_str = nil, indent_empty_lines = false)
+    #   Returns an indented copy of this string.
+    #
+    #   @example
+    #     "foo".indent(2)           # => "  foo"
+    #     "  foo".indent(2)         # => "    foo"
+    #     "foo\n\t\tbar".indent(2)  # => "\t\tfoo\n\t\t\t\tbar"
+    #     "foo".indent(2, '.')      # => "..foo"
+    #     "foo\n\nbar".indent(2)    # => "  foo\n\n  bar"
+    #     "foo\n\nbar".indent(2, nil, true)  # => "  foo\n  \n  bar"
+    #
+    #   @param amount [Fixnum] the indent size.
+    #   @param indent_str [String, nil] the indent character to use.
+    #          The default is +nil+, which tells the method to make a guess by
+    #          peeking at the first indented line, and fallback to a space if
+    #          there is none.
+    #   @param indent_empty_lines [Boolean] whether empty lines should be indented.
+    #   @return [String] a new string.
+    #
+    # @!method indent!(amount, indent_str = nil, indent_empty_lines = false)
+    #   Returns the indented string, or +nil+ if there was nothing to indent.
+    #   This is same as {#indent}, except it indents the receiver in-place.
+    #
+    #   @see #indent
+    #   @param amount (see #indent)
+    #   @param indent_str (see #indent)
+    #   @param indent_empty_lines (see #indent)
+    #   @return [String] self
+    #
+    module Indent
+      refine ::String do
+        def indent(amount, indent_str = nil, indent_empty_lines = false)
+          dup.tap { |str| str.indent! amount, indent_str, indent_empty_lines }
+        end
+
+        def indent!(amount, indent_str = nil, indent_empty_lines = false)
+          indent_str = indent_str || self[/^[ \t]/] || ' '
+          re = indent_empty_lines ? /^/ : /^(?!$)/
+          gsub! re, indent_str * amount
+        end
+      end
+    end
+
+    ##
     # @!method remove(*patterns)
     #   Returns a copy of this string with *all* occurrences of the _patterns_
     #   removed.
@@ -232,6 +276,7 @@ module Corefines
 
     class << self
       alias_method :concat!, :concat
+      alias_method :indent!, :indent
       alias_method :remove!, :remove
     end
   end
