@@ -3,6 +3,11 @@
 :doc-base-url: http://www.rubydoc.info/github/jirutka/corefines/Corefines
 :issue-uri: {repo-uri}/issues
 
+== 1.2.0 (2015-04-27)
+
+* Add new refinement {doc-base-url}/String/Indent[String#indent].
+
+
 == 1.1.0 (2015-04-25)
 
 * Add new refinement {doc-base-url}/String/ToB[String#to_b].
