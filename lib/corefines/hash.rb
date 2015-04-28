@@ -32,6 +32,44 @@ module Corefines
     end
 
     ##
+    # @!method except(*keys)
+    #   @example
+    #     hash = { a: 1, b: 2, c: 3, d: 4 }
+    #     hash.except(:a, :d)  # => { b: 2, c: 3 }
+    #     hash  # => { a: 1, b: 2, c: 3, d: 4 }
+    #
+    #   @param *keys the keys to exclude from the hash.
+    #   @return [Hash] a new hash without the specified key/value pairs.
+    #
+    # @!method except!(*keys)
+    #   Removes the specified keys/value pairs in-place.
+    #
+    #   @example
+    #     hash = { a: 1, b: 2, c: 3, d: 4 }
+    #     hash.except(:a, :d)  # => { b: 2, c: 3 }
+    #     hash  # => { b: 2, c: 3 }
+    #
+    #   @see #except
+    #   @param *keys (see #except)
+    #   @return [Hash] a hash containing the removed key/value pairs.
+    #
+    module Except
+      refine ::Hash do
+        def except(*keys)
+          keys.each_with_object(dup) do |k, hash|
+            hash.delete(k)
+          end
+        end
+
+        def except!(*keys)
+          keys.each_with_object(dup.clear) do |k, deleted|
+            deleted[k] = delete(k) if has_key? k
+          end
+        end
+      end
+    end
+
+    ##
     # @!method +(other_hash)
     #   Alias for +#merge+.
     #
@@ -157,6 +195,7 @@ module Corefines
 
     class << self
       alias_method :compact!, :compact
+      alias_method :except!, :except
       alias_method :rekey!, :rekey
       alias_method :symbolize_keys!, :symbolize_keys
     end
