@@ -172,6 +172,32 @@ module Corefines
     end
 
     ##
+    # @!method relative_path_from(base_dir)
+    #   Returns a relative path from the given _base_dir_ to the path
+    #   represented by this _str_. This method doesn't access the filesystem
+    #   and assumes no symlinks.
+    #
+    #   If _str_ is absolute, then _base_dir_ must be absolute too.
+    #   If _str_ is relative, then _base_dir_ must be relative too.
+    #
+    #   @example
+    #     '/home/flynn/tron'.relative_path_from('/home')  # => flynn/tron
+    #     '/home'.relative_path_from('/home/flynn/tron')  # => ../..
+    #
+    #   @param base_dir [String, Pathname] the base directory to calculate
+    #          relative path from.
+    #   @return [String] a relative path from _base_dir_ to this _str_.
+    #   @raise ArgumentError if it cannot find a relative path.
+    #
+    module RelativePathFrom
+      refine ::String do
+        def relative_path_from(base_dir)
+          ::Pathname.new(self).relative_path_from(::Pathname.new(base_dir)).to_s
+        end
+      end
+    end
+
+    ##
     # @!method remove(*patterns)
     #   Returns a copy of this string with *all* occurrences of the _patterns_
     #   removed.
