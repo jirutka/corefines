@@ -14,7 +14,7 @@ describe String do
         '/foo/imx'   => /foo/imx,
         '/foo.*(o)/' => /foo.*(o)/,
         '/česk[yý]/' => /česk[yý]/,
-        '/foo\/bar/' => /foo\/bar/,
+        '/foo\/bar/' => %r{foo/bar},
         '/foo'       => nil,
         '/foo/z'     => nil
       }
@@ -48,8 +48,8 @@ describe String do
         ''           => nil,
         'foo'        => /foo/,
         '(foo)*'     => /\(foo\)\*/,
-        '/[a-z]'     => /\/\[a\-z\]/,
-        '^.foo/x'    => /\^\.foo\/x/,
+        '/[a-z]'     => %r{/\[a\-z\]},
+        '^.foo/x'    => %r{\^\.foo/x},
         '//'         => //,
         '/(foo)*/im' => /(foo)*/im
       }
