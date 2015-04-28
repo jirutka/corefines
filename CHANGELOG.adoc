@@ -3,6 +3,14 @@
 :doc-base-url: http://www.rubydoc.info/github/jirutka/corefines/Corefines
 :issue-uri: {repo-uri}/issues
 
+== 1.3.0 (2015-04-29)
+
+* Add new refinement {doc-base-url}/String/ToRegexp[String#to_regexp].
+* Add new refinement {doc-base-url}/String/RelativePathFrom[String#relative_path_from].
+* Add new refinement {doc-base-url}/Hash/Except[Hash#except].
+* Add new refinement {doc-base-url}/Hash/Only[Hash#only].
+
+
 == 1.2.0 (2015-04-27)
 
 * Add new refinement {doc-base-url}/String/Indent[String#indent].
