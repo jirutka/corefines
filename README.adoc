@@ -163,7 +163,7 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/Object/Try[#try!]
 * {doc-base-url}/String[String]
 ** {doc-base-url}/String/Color[#color]
-** {doc-base-url}/String/Concat[#concat]
+** {doc-base-url}/String/Concat[#concat!]
 ** {doc-base-url}/String/Decolor[#decolor]
 ** {doc-base-url}/String/Indent[#indent]
 ** {doc-base-url}/String/RelativePathFrom[#relative_path_from]
