@@ -164,6 +164,7 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/String/Indent[#indent]
 ** {doc-base-url}/String/Remove[#remove]
 ** {doc-base-url}/String/ToB[#to_b]
+** {doc-base-url}/String/ToRegexp[#to_regexp]
 ** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
 * {doc-base-url}/Symbol[Symbol]
 ** {doc-base-url}/Symbol/Call[#call]
@@ -177,6 +178,7 @@ Most of the extension methods are based on, or highly inspired from:
 * https://github.com/rubyworks/facets[Ruby Facets]
 * https://github.com/gregwebs/methodchain[methodchain]
 * https://github.com/fazibear/colorize[colorize]
+* https://github.com/seamusabshere/to_regexp[to_regexp]
 
 Very useful articles about refinements and how to “trick” them:
 

@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'corefines/support/alias_submodules'
 
 module Corefines
@@ -232,6 +233,68 @@ module Corefines
       refine ::String do
         def to_b
           %w[true yes on t y 1].include? self.downcase.strip
+        end
+      end
+    end
+
+    ##
+    # @!method to_regexp(opts = {})
+    #   Returns a regular expression represented by this string.
+    #
+    #   @example
+    #     '/^foo/'.to_regexp                  # => /^foo/
+    #     '/foo/i'.to_regexp                  # => /foo/i
+    #     'foo'.to_regexp                     # => nil
+    #
+    #     'foo'.to_regexp(literal: true)      # => /foo/
+    #     '^foo*'.to_regexp(literal: true)    # => /\^foo\*/
+    #
+    #     '/foo/'.to_regexp(detect: true)     # => /foo/
+    #     '$foo/'.to_regexp(detect: true)     # => /\$foo\//
+    #     ''.to_regexp(detect: true)          # => nil
+    #
+    #     '/foo/'.to_regexp(multiline: true)  # => /foo/m
+    #
+    #   @param opts [Hash] options
+    #   @option opts :literal [Boolean] treat meta characters and other regexp
+    #           codes as just a text. Never returns +nil+. (default: false)
+    #   @option opts :detect [Boolean] if string starts and ends with a slash,
+    #           treat it as a regexp, otherwise interpret it literally.
+    #           (default: false)
+    #   @option opts :ignore_case [Boolean] same as +/foo/i+. (default: false)
+    #   @option opts :multiline [Boolean] same as +/foo/m+. (default: false)
+    #   @option opts :extended [Boolean] same as +/foo/x+. (default: false)
+    #
+    #   @return [Regexp, nil] a regexp, or +nil+ if +:literal+ is not set or
+    #     +false+ and this string doesn't represent a valid regexp or is empty.
+    #
+    module ToRegexp
+      refine ::String do
+        def to_regexp(opts = {})
+
+          if opts[:literal]
+            content = ::Regexp.escape(self)
+
+          elsif self =~ %r{\A/(.*)/([imxnesu]*)\z}
+            content, inline_opts = $1, $2
+            content.gsub! '\\/', '/'
+
+            { ignore_case: 'i', multiline: 'm', extended: 'x' }.each do |k, v|
+              opts[k] ||= inline_opts.include? v
+            end if inline_opts
+
+          elsif opts[:detect] && !self.empty?
+            content = ::Regexp.escape(self)
+          else
+            return
+          end
+
+          options = 0
+          options |= ::Regexp::IGNORECASE if opts[:ignore_case]
+          options |= ::Regexp::MULTILINE if opts[:multiline]
+          options |= ::Regexp::EXTENDED if opts[:extended]
+
+          ::Regexp.new(content, options)
         end
       end
     end
