@@ -1,4 +1,4 @@
-require 'simplecov'
+require 'simplecov' unless RUBY_ENGINE == 'jruby'
 require 'corefines'
 
 RSpec.configure do |config|
