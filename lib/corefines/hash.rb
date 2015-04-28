@@ -70,6 +70,48 @@ module Corefines
     end
 
     ##
+    # @!method only(*keys)
+    #   @example
+    #     hash = { a: 1, b: 2, c: 3, d: 4 }
+    #     hash.only(:a, :d)  # => { a: 1, d: 4 }
+    #     hash  # => { a: 1, b: 2, c: 3, d: 4 }
+    #
+    #   @param *keys the keys to include in the hash.
+    #   @return [Hash] a new hash with only the specified key/value pairs.
+    #
+    # @!method only!(*keys)
+    #   Removes all key/value pairs except the ones specified by _keys_.
+    #
+    #   @example
+    #     hash = { a: 1, b: 2, c: 3, d: 4 }
+    #     hash.only(:a, :d)  # => { a: 1, d: 4 }
+    #     hash  # => { a: 1, d: 4 }
+    #
+    #   @see #only
+    #   @param *keys (see #only)
+    #   @return [Hash] a hash containing the removed key/value pairs.
+    #
+    module Only
+      refine ::Hash do
+        def only(*keys)
+          # Note: self.dup is used to preserve the default_proc.
+          keys.each_with_object(dup.clear) do |k, hash|
+            hash[k] = self[k] if has_key? k
+          end
+        end
+
+        def only!(*keys)
+          deleted = keys.each_with_object(dup) do |k, hash|
+            hash.delete(k)
+          end
+          replace only(*keys)
+
+          deleted
+        end
+      end
+    end
+
+    ##
     # @!method +(other_hash)
     #   Alias for +#merge+.
     #
@@ -196,6 +238,7 @@ module Corefines
     class << self
       alias_method :compact!, :compact
       alias_method :except!, :except
+      alias_method :only!, :only
       alias_method :rekey!, :rekey
       alias_method :symbolize_keys!, :symbolize_keys
     end
