@@ -128,6 +128,56 @@ module Corefines
     end
 
     ##
+    # @!method force_utf8
+    #   Returns a copy of _str_ with encoding changed to UTF-8 and all invalid
+    #   byte sequences replaced with the Unicode Replacement Character (U+FFFD).
+    #
+    #   If _str_ responds to +#scrub!+ (Ruby >=2.1), then it's used for
+    #   replacing invalid bytes. Otherwise a simple custom implementation is
+    #   used (may not return the same result as +#scrub!+).
+    #
+    #   @return [String] a valid UTF-8 string.
+    #
+    # @!method force_utf8!
+    #   Changes the encoding to UTF-8, replaces all invalid byte sequences with
+    #   the Unicode Replacement Character (U+FFFD) and returns self.
+    #   This is same as {#force_utf8}, except it indents the receiver in-place.
+    #
+    #   @return (see #force_utf8)
+    #
+    module ForceUTF8
+      refine ::String do
+        def force_utf8
+          dup.force_utf8!
+        end
+
+        def force_utf8!
+          str = force_encoding(Encoding::UTF_8)
+
+          if str.respond_to? :scrub!
+            str.scrub!
+
+          else
+            result = ''.force_encoding('BINARY')
+            invalid = false
+
+            str.chars.each do |c|
+              if c.valid_encoding?
+                result << c
+                invalid = false
+              elsif !invalid
+                result << "\uFFFD"
+                invalid = true
+              end
+            end
+
+            replace result.force_encoding(Encoding::UTF_8)
+          end
+        end
+      end
+    end
+
+    ##
     # @!method indent(amount, indent_str = nil, indent_empty_lines = false)
     #   Returns an indented copy of this string.
     #
@@ -365,6 +415,7 @@ module Corefines
 
     class << self
       alias_method :concat!, :concat
+      alias_method :force_utf8!, :force_utf8
       alias_method :indent!, :indent
       alias_method :remove!, :remove
     end
