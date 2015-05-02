@@ -3,6 +3,12 @@
 :doc-base-url: http://www.rubydoc.info/github/jirutka/corefines/Corefines
 :issue-uri: {repo-uri}/issues
 
+
+== 1.4.0 (2015-05-03)
+
+* Add new refinement {doc-base-url}/String/ForceUTF8[String#force_utf8].
+
+
 == 1.3.0 (2015-04-29)
 
 * Add new refinement {doc-base-url}/String/ToRegexp[String#to_regexp].
