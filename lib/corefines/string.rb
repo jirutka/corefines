@@ -314,22 +314,25 @@ module Corefines
     end
 
     ##
-    # @!method to_regexp(opts = {})
+    # @!method to_re(opts = {})
     #   Returns a regular expression represented by this string.
     #
     #   @example
-    #     '/^foo/'.to_regexp                  # => /^foo/
-    #     '/foo/i'.to_regexp                  # => /foo/i
-    #     'foo'.to_regexp                     # => nil
+    #     '/^foo/'.to_re                  # => /^foo/
+    #     '/foo/i'.to_re                  # => /foo/i
+    #     'foo'.to_re                     # => nil
     #
-    #     'foo'.to_regexp(literal: true)      # => /foo/
-    #     '^foo*'.to_regexp(literal: true)    # => /\^foo\*/
+    #     'foo'.to_re(literal: true)      # => /foo/
+    #     '^foo*'.to_re(literal: true)    # => /\^foo\*/
     #
-    #     '/foo/'.to_regexp(detect: true)     # => /foo/
-    #     '$foo/'.to_regexp(detect: true)     # => /\$foo\//
-    #     ''.to_regexp(detect: true)          # => nil
+    #     '/foo/'.to_re(detect: true)     # => /foo/
+    #     '$foo/'.to_re(detect: true)     # => /\$foo\//
+    #     ''.to_re(detect: true)          # => nil
     #
-    #     '/foo/'.to_regexp(multiline: true)  # => /foo/m
+    #     '/foo/'.to_re(multiline: true)  # => /foo/m
+    #
+    #   @note This method was renamed from +to_regexp+ to +to_re+ due to bug
+    #     in MRI, see {#11117}[https://bugs.ruby-lang.org/issues/11117].
     #
     #   @param opts [Hash] options
     #   @option opts :literal [Boolean] treat meta characters and other regexp
@@ -344,9 +347,9 @@ module Corefines
     #   @return [Regexp, nil] a regexp, or +nil+ if +:literal+ is not set or
     #     +false+ and this string doesn't represent a valid regexp or is empty.
     #
-    module ToRegexp
+    module ToRe
       refine ::String do
-        def to_regexp(opts = {})
+        def to_re(opts = {})
 
           if opts[:literal]
             content = ::Regexp.escape(self)

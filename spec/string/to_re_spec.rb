@@ -1,9 +1,9 @@
 # coding: utf-8
 
 describe String do
-  using Corefines::String::to_regexp
+  using Corefines::String::to_re
 
-  describe 'to_regexp' do
+  describe 'to_re' do
 
     context "with defaults" do
       {
@@ -20,13 +20,13 @@ describe String do
       }
       .each do |str, expected|
         it "returns regexp '#{expected.inspect}' for string '#{str}'" do
-          expect(str.to_regexp).to eql expected
+          expect(str.to_re).to eql expected
         end
       end
 
       %w[n e s u nesu].each do |kcode|
         it "ignores encoding option: #{kcode}" do
-          expect("/foo/#{kcode}".to_regexp).to eql /foo/
+          expect("/foo/#{kcode}".to_re).to eql /foo/
         end
       end
     end
@@ -38,7 +38,7 @@ describe String do
       }
       .each do |str, expected|
         it "returns regexp '#{expected.inspect}' for string '#{str}" do
-          expect(str.to_regexp(literal: true)).to eql expected
+          expect(str.to_re(literal: true)).to eql expected
         end
       end
     end
@@ -55,21 +55,21 @@ describe String do
       }
       .each do |str, expected|
         it "returns regexp '#{expected.inspect}' for string '#{str}'" do
-          expect(str.to_regexp(detect: true)).to eql expected
+          expect(str.to_re(detect: true)).to eql expected
         end
       end
     end
 
     context "with ignore_case" do
-      it { expect('/foo/'.to_regexp(ignore_case: true)).to eql /foo/i }
+      it { expect('/foo/'.to_re(ignore_case: true)).to eql /foo/i }
     end
 
     context "with multiline" do
-      it { expect('/foo/'.to_regexp(multiline: true)).to eql /foo/m }
+      it { expect('/foo/'.to_re(multiline: true)).to eql /foo/m }
     end
 
     context "with extended" do
-      it { expect('/foo/'.to_regexp(extended: true)).to eql /foo/x }
+      it { expect('/foo/'.to_re(extended: true)).to eql /foo/x }
     end
   end
 end

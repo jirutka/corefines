@@ -171,7 +171,7 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/String/RelativePathFrom[#relative_path_from]
 ** {doc-base-url}/String/Remove[#remove]
 ** {doc-base-url}/String/ToB[#to_b]
-** {doc-base-url}/String/ToRegexp[#to_regexp]
+** {doc-base-url}/String/ToRe[#to_re]
 ** {doc-base-url}/String/Unindent[#unindent] (alias `#strip_heredoc`)
 * {doc-base-url}/Symbol[Symbol]
 ** {doc-base-url}/Symbol/Call[#call]
