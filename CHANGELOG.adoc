@@ -4,6 +4,11 @@
 :issue-uri: {repo-uri}/issues
 
 
+== 1.5.0 (2015-05-03)
+
+* Rename String refinement `#to_regexp` to `#to_re` to avoid bug https://bugs.ruby-lang.org/issues/11117[#11117] in MRI.
+
+
 == 1.4.0 (2015-05-03)
 
 * Add new refinement {doc-base-url}/String/ForceUTF8[String#force_utf8].
