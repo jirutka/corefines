@@ -25,6 +25,10 @@ module Corefines
     #       "camel::ca-se-y".camelcase(':', '-')      # => "camelCaSeY"
     #       "camel42case".camelcase(/[0-9]+/)         # => "camelCase"
     #
+    #     @param *separators [String, Regexp] the patterns used to determine
+    #            where capitalization should occur. Defaults to <tt>/_+/</tt> and
+    #            <tt>\s+</tt>.
+    #
     #   @overload camelcase(first_letter, *separators)
     #     @example
     #       "camel case".camelcase(:upper)            # => "CamelCase"
@@ -33,10 +37,10 @@ module Corefines
     #     @param first_letter [:upper, :lower] desired case of the first
     #            character of a word - +:upper+ to be upcased, or +:lower+ to
     #            be downcased.
+    #     @param *separators [String, Regexp] the patterns used to determine
+    #            where capitalization should occur. Defaults to <tt>/_+/</tt> and
+    #            <tt>\s+</tt>.
     #
-    #   @param *separators [String, Regexp] the patterns used to determine
-    #          where capitalization should occur. Defaults to <tt>/_+/</tt> and
-    #          <tt>\s+</tt>.
     #   @return [String] a copy of the _str_ converted to camelcase.
     #
     module Camelcase
