@@ -342,6 +342,40 @@ module Corefines
     end
 
     ##
+    # @!method snake_case
+    #   @example
+    #     "snakeCase".snake_case       # => "snake_case"
+    #     "SNAkeCASe".snake_case       # => "sn_ake_ca_se"
+    #     "Snake2Case".snake_case      # => "snake2_case"
+    #     "snake2case".snake_case      # => "snake2case"
+    #     "snake-Ca-se".snake_case     # => "snake_ca_se"
+    #     "snake  ca se".snake_case    # => "snake__ca_se"
+    #     "__snake-case__".snake_case  # => "__snake_case__"
+    #
+    #   @return [String] a copy of the _str_ converted to snake_case.
+    #
+    # @!method snakecase
+    #   Alias for {#snake_case}.
+    #
+    #   @return (see #snake_case)
+    #
+    module SnakeCase
+      refine ::String do
+        def snake_case
+          self.dup.tap do |s|
+            s.gsub!(/([A-Z\d]+)([A-Z][a-z])/,'\1_\2')
+            s.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+            s.tr!('-', '_')
+            s.gsub!(/\s/, '_')
+            s.downcase!
+          end
+        end
+
+        alias_method :snakecase, :snake_case
+      end
+    end
+
+    ##
     # @!method to_b
     #   Interprets common affirmative string meanings as +true+, otherwise
     #   +false+. White spaces and case are ignored.
@@ -476,6 +510,7 @@ module Corefines
       alias_method :force_utf8!, :force_utf8
       alias_method :indent!, :indent
       alias_method :remove!, :remove
+      alias_method :snakecase, :snake_case
     end
   end
 end
