@@ -8,6 +8,61 @@ module Corefines
     private_constant :ESCAPE_SEQUENCE
 
     ##
+    # @!method camelcase
+    #   Returns a copy of the _str_ converted to camelcase. When no +:upper+ or
+    #   +:lower+ is specified, then it leaves the first character of a word
+    #   (after camelization) unchanged.
+    #
+    #   @example
+    #     "camel case".camelcase          # => "camelCase"
+    #     "Camel case".camelcase          # => "CamelCase"
+    #     "camel_case__4you!".camelcase   # => "camelCase4you!"
+    #     "camel_case__4_you!".camelcase  # => "camelCase4You!"
+    #
+    #   @overload camelcase(*separators)
+    #     @example
+    #       "camel-case yay!".camelcase('-')          # => "camelCase yay!"
+    #       "camel::ca-se-y".camelcase(':', '-')      # => "camelCaSeY"
+    #       "camel42case".camelcase(/[0-9]+/)         # => "camelCase"
+    #
+    #   @overload camelcase(first_letter, *separators)
+    #     @example
+    #       "camel case".camelcase(:upper)            # => "CamelCase"
+    #       "camel-case yay!".camelcase(:upper, '-')  # => "CamelCase Yay!"
+    #
+    #     @param first_letter [:upper, :lower] desired case of the first
+    #            character of a word - +:upper+ to be upcased, or +:lower+ to
+    #            be downcased.
+    #
+    #   @param *separators [String, Regexp] the patterns used to determine
+    #          where capitalization should occur. Defaults to <tt>/_+/</tt> and
+    #          <tt>\s+</tt>.
+    #   @return [String] a copy of the _str_ converted to camelcase.
+    #
+    module Camelcase
+      refine ::String do
+        def camelcase(*separators)
+          first_letter = separators.shift if ::Symbol === separators.first
+          separators = [/_+/, /\s+/] if separators.empty?
+
+          self.dup.tap do |str|
+            separators.compact.each do |s|
+              s = "(?:#{::Regexp.escape(s)})+" unless s.is_a? ::Regexp
+              str.gsub!(/#{s}([a-z\d])/i) { $1.upcase }
+            end
+
+            case first_letter
+            when :upper
+              str.gsub!(/(\A|\s)([a-z])/) { $1 + $2.upcase }
+            when :lower
+              str.gsub!(/(\A|\s)([A-Z])/) { $1 + $2.downcase }
+            end
+          end
+        end
+      end
+    end
+
+    ##
     # @!method color
     #   @example
     #     "Roses are red".color(:red) # => "\e[0;31;49mRoses are red\e[0m"
