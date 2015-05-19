@@ -18,7 +18,7 @@ image:https://img.shields.io/travis/{gh-name}/{gh-branch}.svg?style={badge-style
 image:https://img.shields.io/codeclimate/coverage/github/{gh-name}.svg?style={badge-style}[Test Coverage, link="https://codeclimate.com/github/{gh-name}"]
 image:https://img.shields.io/codeclimate/github/{gh-name}.svg?style={badge-style}[Code Climate, link="https://codeclimate.com/github/{gh-name}"]
 image:https://img.shields.io/gem/v/{gem-name}.svg?style={badge-style}[Gem Version, link="https://rubygems.org/gems/{gem-name}"]
-image:https://img.shields.io/badge/yard-docs-blue.svg?style={badge-style}[Yard Docs, link="http://www.rubydoc.info/github/{gh-name}/frames"]
+image:https://img.shields.io/badge/yard-docs-blue.svg?style={badge-style}[Yard Docs, link="http://www.rubydoc.info/github/{gh-name}/{gh-branch}"]
 endif::env-github[]
 
 Corefines is a collection of general purpose _refinements_ for extending the core capabilities of Ruby’s built-in classes.
