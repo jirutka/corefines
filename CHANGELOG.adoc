@@ -3,6 +3,11 @@
 :doc-base-url: http://www.rubydoc.info/github/jirutka/corefines/Corefines
 :issue-uri: {repo-uri}/issues
 
+== 1.7.0 (unreleased)
+
+* Add new refinement {doc-base-url}/Enumerable/MapTo[Enumerable#map_to].
+
+
 == 1.6.0 (2015-05-16)
 
 * Add new refinement {doc-base-url}/String/Camelcase[String#camelcase].

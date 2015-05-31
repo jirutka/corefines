@@ -59,6 +59,28 @@ module Corefines
       end
     end
 
+    ##
+    # @!method map_to(klass)
+    #   Maps each element of this _enum_ into the _klass_ via constructor.
+    #
+    #   @example
+    #     ['/tmp', '/var/tmp'].map_to(Pathname) # => [#<Pathname:/tmp>, #<Pathname:/var/tmp>]
+    #
+    #   @param klass [#new] the klass to map each element to.
+    #   @return [Enumerable] a new array with instances of the _klass_ for
+    #     every element in _enum_.
+    #
+    module MapTo
+      Support.classes_including_module(::Enumerable) do |klass|
+
+        refine klass do
+          def map_to(klass)
+            map { |e| klass.new(e) }
+          end
+        end
+      end
+    end
+
     include Support::AliasSubmodules
   end
 end
