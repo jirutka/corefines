@@ -6,6 +6,7 @@
 == 1.7.0 (unreleased)
 
 * Add new refinement {doc-base-url}/Enumerable/MapTo[Enumerable#map_to].
+* Add new refinement {doc-base-url}/Array/Wrap[Array#wrap].
 
 
 == 1.6.0 (2015-05-16)
