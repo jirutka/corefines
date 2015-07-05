@@ -37,6 +37,47 @@ module Corefines
     end
 
     ##
+    # @!method many?
+    #   Returns +true+ if the enumerable has more than one element.
+    #
+    #   This method is functionally equivalent to <tt>enum.to_a.size > 1</tt>,
+    #   or <tt>enum.select { ... }.length > 1</tt> when the block is given.
+    #
+    #   @example
+    #     [1].many?             # => false
+    #     [1, 2].many?          # => true
+    #     [1, 2, 3].many?       # => true
+    #     [1, nil].many?        # => true
+    #     [1, 2, 3].many? { |n| n > 2 }  # => false
+    #
+    #   @overload many?
+    #     @return [Boolean] +true+ if the enumerable has more than one element.
+    #
+    #   @overload many?(&block)
+    #     @yield [obj] gives each element to the block.
+    #     @return [Boolean] +true+ if the block returns a truthy value (i.e.
+    #       other than +nil+ and +false+) more than once.
+    #
+    module Many
+      Support.classes_including_module(::Enumerable) do |klass|
+
+        refine klass do
+          def many?
+            cnt = 0
+            if block_given?
+              any? do |element|
+                cnt += 1 if yield element
+                cnt > 1
+              end
+            else
+              any? { (cnt += 1) > 1 }
+            end
+          end
+        end
+      end
+    end
+
+    ##
     # @!method map_send(method_name, *args, &block)
     #   Sends a message to each element and collects the result.
     #
@@ -82,5 +123,9 @@ module Corefines
     end
 
     include Support::AliasSubmodules
+
+    class << self
+      alias_method :many?, :many
+    end
   end
 end

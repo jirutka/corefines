@@ -7,6 +7,7 @@
 
 * Add new refinement {doc-base-url}/Enumerable/MapTo[Enumerable#map_to].
 * Add new refinement {doc-base-url}/Array/Wrap[Array#wrap].
+* Add new refinement {doc-base-url}/Enumerable/Many[Enumerable#many?].
 
 
 == 1.6.0 (2015-05-16)
