@@ -41,12 +41,12 @@ TODO
 Add this line to your application’s Gemfile:
 
 [source]
-gem 'corefines', '~> 1.7'
+gem 'corefines', '~> 1.8'
 
 or to your gemspec:
 
 [source]
-s.add_runtime_dependency 'corefines', '~> 1.7'
+s.add_runtime_dependency 'corefines', '~> 1.8'
 
 and then execute:
 
