@@ -3,6 +3,7 @@ require 'corefines/support/fake_refinements'
 
 # Refinements
 require 'corefines/array'
+require 'corefines/class'
 require 'corefines/enumerable'
 require 'corefines/hash'
 require 'corefines/module'

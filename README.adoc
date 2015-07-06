@@ -133,6 +133,8 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/Array/Second[#second]
 ** {doc-base-url}/Array/Third[#third]
 ** {doc-base-url}/Array/Wrap[.wrap]
+* {doc-base-url}/Class[Class]
+** {doc-base-url}/Class/Descendants[#descendants]
 * {doc-base-url}/Enumerable[Enumerable]
 ** {doc-base-url}/Enumerable/IndexBy[#index_by]
 ** {doc-base-url}/Enumerable/Many[#many?]
