@@ -11,13 +11,31 @@ module Corefines
     #   @return [Array<Class>] all descendants of this class.
     #
     module Descendants
-      refine ::Class do
-        def descendants
-          descendants = []
-          ::ObjectSpace.each_object(singleton_class) do |klass|
-            descendants.unshift(klass) unless klass == self
+      begin
+        # Just try whether it raises exception...
+        ::ObjectSpace.each_object(::Class.new) {}
+
+        refine ::Class do
+          def descendants
+            descendants = []
+            ::ObjectSpace.each_object(singleton_class) do |klass|
+              descendants.unshift(klass) unless klass == self
+            end
+            descendants
           end
-          descendants
+        end
+
+      # Compatibility mode for JRuby when running without option -X+O.
+      rescue StandardError
+
+        refine ::Class do
+          def descendants
+            descendants = []
+            ::ObjectSpace.each_object(::Class) do |klass|
+              descendants.unshift(klass) if klass < self
+            end
+            descendants.uniq
+          end
         end
       end
     end
