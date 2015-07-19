@@ -155,6 +155,7 @@ Not ideal indeed, but probably the best of what we can achieve.
 * {doc-base-url}/Module[Module]
 ** {doc-base-url}/Module/AliasClassMethod[#alias_class_method]
 ** {doc-base-url}/Module/AliasMethodChain[#alias_method_chain]
+** {doc-base-url}/Module/Autocurry[#autocurry]
 * {doc-base-url}/Object[Object]
 ** {doc-base-url}/Object/Blank[#blank?]
 ** {doc-base-url}/Object/DeepDup[#deep_dup]
@@ -193,6 +194,7 @@ Most of the extension methods are based on, or highly inspired from:
 * https://github.com/gregwebs/methodchain[methodchain]
 * https://github.com/fazibear/colorize[colorize]
 * https://github.com/seamusabshere/to_regexp[to_regexp]
+* https://github.com/banister/funkify[funkify]
 
 Very useful articles about refinements and how to “trick” them:
 

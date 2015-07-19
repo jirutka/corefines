@@ -3,9 +3,14 @@
 :doc-base-url: http://www.rubydoc.info/github/jirutka/corefines/Corefines
 :issue-uri: {repo-uri}/issues
 
+== 1.9.0 (unreleased)
+
+* Add new refinement {doc-base-url}/Module/Autocurry[Module#autocurry].
+
+
 == 1.8.0 (2015-07-06)
 
-* Add new refinement {doc-base-url}/Class/descendants[Class#descendants].
+* Add new refinement {doc-base-url}/Class/Descendants[Class#descendants].
 
 
 == 1.7.0 (2015-07-05)
