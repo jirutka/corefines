@@ -36,6 +36,10 @@ describe Module do
       it "does not override existing #method_added" do
         expect( klass.instance_variable_get(:@called) ).to eq [:alpha, :beta, :gamma]
       end
+
+      it "defines #method_added as private" do
+        expect( klass.singleton_class.private_method_defined?(:method_added) ).to be true
+      end
     end
 
     context "with a single argument" do

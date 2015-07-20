@@ -160,6 +160,8 @@ module Corefines
             in_use = false
             orig_method_added.call(meth_name) if orig_method_added
           end
+
+          singleton_class.__send__(:private, :method_added)
         end
       end
     end
