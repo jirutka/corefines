@@ -149,7 +149,7 @@ module Corefines
         def autocurry_subsequent
           in_use = nil
 
-          if singleton_class.method_defined? :method_added
+          if singleton_class.respond_to?(:method_added, true)
             orig_method_added = method(:method_added)
           end
 

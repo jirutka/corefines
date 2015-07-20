@@ -9,8 +9,11 @@ describe Module do
 
       let!(:klass) do
         Class.new do
-          def self.method_added(name)
-            (@called ||= []) << name
+          class << self
+            private
+            def method_added(name)
+              (@called ||= []) << name
+            end
           end
 
           def alpha(x) x end
