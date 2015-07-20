@@ -1,4 +1,5 @@
 require 'corefines/support/alias_submodules'
+require 'corefines/support/utils'
 
 module Corefines
   module Module
@@ -77,13 +78,8 @@ module Corefines
           alias_method without_method, target
           alias_method target, with_method
 
-          if public_method_defined? without_method
-            public target
-          elsif protected_method_defined? without_method
-            protected target
-          elsif private_method_defined? without_method
-            private target
-          end
+          visibility = ::Corefines::Support::Utils.method_visibility(self, without_method)
+          __send__(visibility, target)
 
           self
         end
