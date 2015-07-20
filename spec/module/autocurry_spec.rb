@@ -20,13 +20,19 @@ describe Module do
 
           autocurry
           def beta(x) x end
+          private
           def gamma(x) x end
         end
       end
 
       it "curries all methods after autocurry call" do
         expect( obj.beta ).to be_a Proc
-        expect( obj.gamma ).to be_a Proc
+        expect( obj.send(:gamma) ).to be_a Proc
+      end
+
+      it "preserves method visibility" do
+        expect( klass.public_method_defined? :beta ).to be true
+        expect( klass.private_method_defined? :gamma ).to be true
       end
 
       it "does not autocurry methods before autocurry call" do
@@ -50,13 +56,19 @@ describe Module do
           autocurry :alpha
           def beta(x) x end
           def gamma(x) x end
+          protected :gamma
           autocurry :gamma
         end
       end
 
       it "curries the specified method" do
         expect( obj.alpha ).to be_a Proc
-        expect( obj.gamma ).to be_a Proc
+        expect( obj.send(:gamma) ).to be_a Proc
+      end
+
+      it "preserves method visibility" do
+        expect( klass.public_method_defined? :alpha ).to be true
+        expect( klass.protected_method_defined? :gamma ).to be true
       end
 
       it "does not autocurry other methods" do

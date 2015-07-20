@@ -135,10 +135,12 @@ module Corefines
 
         def autocurry_method(name)
           orig_meth = instance_method(name)
+          visibility = ::Corefines::Support::Utils.method_visibility(self, name)
 
           define_method(name) do |*args|
             orig_meth.bind(self).to_proc.curry.call(*args)
           end
+          __send__(visibility, name)
         end
 
         # XXX is this thread safe?
