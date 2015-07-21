@@ -166,6 +166,8 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/Object/ThenIf[#then_if]
 ** {doc-base-url}/Object/Try[#try]
 ** {doc-base-url}/Object/Try[#try!]
+* {doc-base-url}/Proc[Proc]
+** {doc-base-url}/Proc/OpRshift[Proc#>>]
 * {doc-base-url}/String[String]
 ** {doc-base-url}/String/Camelcase[#camelcase]
 ** {doc-base-url}/String/Color[#color]

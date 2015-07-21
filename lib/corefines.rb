@@ -8,6 +8,7 @@ require 'corefines/enumerable'
 require 'corefines/hash'
 require 'corefines/module'
 require 'corefines/object'
+require 'corefines/proc'
 require 'corefines/string'
 require 'corefines/symbol'
 
