@@ -4,7 +4,7 @@
 :issue-uri: {repo-uri}/issues
 
 
-== 1.9.0 (unreleased)
+== 1.9.0 (2016-02-03)
 
 * Add new refinement {doc-base-url}/Enumerable/MapBy[Enumerable#map_by].
 
