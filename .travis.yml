@@ -1,19 +1,17 @@
 language: ruby
 sudo: false
 rvm:
-  - 2.2
-  - 2.1
-  - 2.0
-  - 1.9.3
+  - '2.3.0'
+  - '2.2'
+  - '2.1'
+  - '2.0'
+  - '1.9.3'
   - jruby-9.0.0.0.pre1
   - jruby-1.7
-  - rbx-2.5
-  - rbx-2.2
   - ruby-head
   - jruby-head
 matrix:
   allow_failures:
-    - rvm: rbx-2.2
     - rvm: jruby-head
 addons:
   code_climate:
