@@ -78,6 +78,45 @@ module Corefines
     end
 
     ##
+    # @!method map_by(&block)
+    #   Converts enumerable into a Hash, iterating over each element where the
+    #   provided block must return an array of two elements: a key and a value
+    #   to be added into an array that corresponds to that key.
+    #
+    #   It's similar to {::Enumerable#group_by}, but allows to map the value
+    #   being added into a group.
+    #
+    #   @example
+    #     a = [1, 2, 3, 4, 5]
+    #     a.map_by { |e| [e % 2, e + 1] }
+    #     #=> { 0 => [3, 5], 1 => [2, 4, 6] }
+    #
+    #   @example
+    #     h = { "Lucy" => 86, "Ruby" => 98, "Drew" => 94, "Lisa" => 54 }
+    #     h.map_by { |k, v| [score(v), k] }
+    #     #=> { "A" => ["Ruby", "Drew"], "B" => ["Lucy"], "F" => ["Lisa"] }
+    #
+    #   @yield [obj] gives each element to the block.
+    #   @yieldreturn [Array] an array with the key and the value.
+    #   @return [Hash]
+    #
+    module MapBy
+      Support.classes_including_module(::Enumerable) do |klass|
+
+        refine klass do
+          def map_by
+            res = {}
+            each do |e|
+              k, v = yield(*e)
+              (res[k] ||= []) << v
+            end
+            res
+          end
+        end
+      end
+    end
+
+    ##
     # @!method map_send(method_name, *args, &block)
     #   Sends a message to each element and collects the result.
     #
