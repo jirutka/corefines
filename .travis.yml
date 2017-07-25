@@ -19,3 +19,10 @@ addons:
   code_climate:
     repo_token:
       secure: DNXX6vrtb1D1NSxA22LTgHAnIEiRt5OJ6sYeakj3tdtOwclA9/dT+mYA8zI+l8uI7d0ojdWGlWWoJKbLsVvebDaoYSVm7ekLBMS3dhQ/gvd5RIZ0Eo6xadB0QMfsTXIhCkFt8CNlL0YI89abyhLSX2Vn8QFN7K5ihbkKatR+2JY=
+deploy:
+  provider: rubygems
+  api_key:
+    secure: "WRimt7v5ZnhRt31MqPGJ29mxoHvOxvuTsDvmkRLY1NywGfevNr9L983kmiYFLJA1+9gUpei3JZiJs9tRwbCKPLWsSwc2nipGw7/1oOK85jnCnbnJWD/pT5+Enuzzn5RlFZe/UYhNFUoeyU4AYwa0v/hgTI3CNJlV6h5g4VVuWEM="
+  on:
+    rvm: 2.4
+    tags: true
