@@ -36,12 +36,12 @@ TODO
 Add this line to your application’s Gemfile:
 
 [source]
-gem 'corefines', '~> 1.9'
+gem 'corefines', '~> 1.10'
 
 or to your gemspec:
 
 [source]
-s.add_runtime_dependency 'corefines', '~> 1.9'
+s.add_runtime_dependency 'corefines', '~> 1.10'
 
 and then execute:
 
