@@ -4,6 +4,11 @@
 :issue-uri: {repo-uri}/issues
 
 
+== Unreleased
+
+* Replace deprecated `Fixnum` with `Integer`.
+
+
 == 1.9.0 (2016-02-03)
 
 * Add new refinement {doc-base-url}/Enumerable/MapBy[Enumerable#map_by].

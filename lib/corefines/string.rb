@@ -75,15 +75,15 @@ module Corefines
     #     "Sugar is sweet".color(text: 7) # => "\e[0;37;49mSugar is sweet\e[0m"
     #
     #   @overload color(text_color)
-    #     @param text_color [#to_sym, Fixnum] text (foreground) color (see
+    #     @param text_color [#to_sym, Integer] text (foreground) color (see
     #            {COLOR_CODES}).
     #
     #   @overload color(opts)
-    #     @option opts [#to_sym, Fixnum] :mode text attributes (see
+    #     @option opts [#to_sym, Integer] :mode text attributes (see
     #             {MODE_CODES}).
-    #     @option opts [#to_sym, Fixnum] :text,:fg text (foreground) color (see
+    #     @option opts [#to_sym, Integer] :text,:fg text (foreground) color (see
     #             {COLOR_CODES}).
-    #     @option opts [#to_sym, Fixnum] :background,:bg background color (see
+    #     @option opts [#to_sym, Integer] :background,:bg background color (see
     #             {COLOR_CODES}).
     #
     #   @return [String] a copy of this string colored for command line output
@@ -133,12 +133,12 @@ module Corefines
       private
 
       def self.color_code(color, offset)
-        return color + offset if color.is_a? ::Fixnum
+        return color + offset if color.is_a? ::Integer
         COLOR_CODES[color.to_sym] + offset if color && COLOR_CODES[color.to_sym]
       end
 
       def self.mode_code(mode)
-        return mode if mode.is_a? ::Fixnum
+        return mode if mode.is_a? ::Integer
         MODE_CODES[mode.to_sym] if mode
       end
     end
@@ -248,7 +248,7 @@ module Corefines
     #     "foo\n\nbar".indent(2)    # => "  foo\n\n  bar"
     #     "foo\n\nbar".indent(2, nil, true)  # => "  foo\n  \n  bar"
     #
-    #   @param amount [Fixnum] the indent size.
+    #   @param amount [Integer] the indent size.
     #   @param indent_str [String, nil] the indent character to use.
     #          The default is +nil+, which tells the method to make a guess by
     #          peeking at the first indented line, and fallback to a space if

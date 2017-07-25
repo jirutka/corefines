@@ -21,7 +21,7 @@ describe String do
       end
     end
 
-    context Fixnum do
+    context Integer do
       it "returns text with the specified foreground color" do
         expect(text.color(7)).to eq "\e[0;37;49m#{text}\e[0m"
       end
