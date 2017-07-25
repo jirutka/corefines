@@ -1,11 +1,6 @@
 = Corefines
 Jakub Jirutka <https://github.com/jirutka[@jirutka]>
-:page-layout: base
-:idprefix:
-ifdef::env-github[:idprefix: user-content-]
-:idseparator: -
 :source-language: ruby
-:language: {source-language}
 // custom
 :gem-name: corefines
 :gh-name: jirutka/{gem-name}
