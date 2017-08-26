@@ -1,6 +1,3 @@
-require 'simplecov' unless RUBY_ENGINE == 'jruby'
-require 'corefines'
-
 RSpec.configure do |config|
 
   # rspec-expectations config
@@ -28,3 +25,13 @@ RSpec.configure do |config|
 
   config.color = true
 end
+
+unless RUBY_ENGINE == 'jruby'
+  require 'simplecov'
+
+  SimpleCov.start do
+    add_filter '/spec/'
+  end
+end
+
+require 'corefines'

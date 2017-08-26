@@ -29,7 +29,7 @@ don't support refinements (yet).
   s.required_ruby_version = '>= 1.9.3'
 
   s.add_development_dependency 'asciidoctor', '~> 1.5.0'  # needed for yard
-  s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
+  s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0'
   s.add_development_dependency 'rake', '~> 10.0'
   s.add_development_dependency 'rspec', '~> 3.1'
   s.add_development_dependency 'simplecov', '~> 0.9'
