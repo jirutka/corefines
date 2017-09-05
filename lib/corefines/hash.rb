@@ -70,6 +70,80 @@ module Corefines
     end
 
     ##
+    # @!method map_values(&block)
+    #   Returns a new hash with the results of running the _block_ once for
+    #   every value. This method does not change the keys.
+    #
+    #   This is a port of method +#transform_values+ from Ruby 2.4. If that
+    #   method is defined, then +#map_values+ will be just an alias.
+    #
+    #   @overload map_values(&block)
+    #     @yield [value] gives every value to the block.
+    #       The return value becomes a new value.
+    #     @return [Hash] a new hash.
+    #
+    #   @overload map_values
+    #     @return [Enumerator]
+    #
+    # @!method map_values!(&block)
+    #   Invokes the given _block_ once for each value in this hash, replacing
+    #   it with the new value returned by the _block_, and then returns self.
+    #   This method does not change the keys.
+    #
+    #   This is a port of method +#transform_values!+ from Ruby 2.4. If that
+    #   method is defined, then +#map_values!+ will be just an alias.
+    #
+    #   @overload map_values!(&block)
+    #     @yield [value] gives every value to the block.
+    #       The return value becomes a new value.
+    #     @return [Hash] self
+    #
+    #   @overload map_values!
+    #     @return [Enumerator]
+    #
+    module MapValues
+      refine ::Hash do
+        if respond_to?(:transform_values)
+          alias_method :map_values, :transform_values
+        else
+          def map_values
+            if block_given?
+              each_with_object(self.class.new) do |(key, value), hash|
+                hash[key] = yield value
+              end
+            else
+              ::Enumerator.new do |y|
+                each_with_object(self.class.new) do |(key, value), hash|
+                  hash[key] = y.yield(value)
+                end
+              end
+            end
+          end
+        end
+
+        if respond_to?(:transform_values!)
+          alias_method :map_values!, :transform_values!
+        else
+          def map_values!
+            if block_given?
+              each do |key, value|
+                store(key, yield(value))
+              end
+              self
+            else
+              ::Enumerator.new do |y|
+                each do |key, value|
+                  store(key, y.yield(value))
+                end
+                self
+              end
+            end
+          end
+        end
+      end
+    end
+
+    ##
     # @!method only(*keys)
     #   @example
     #     hash = { a: 1, b: 2, c: 3, d: 4 }
@@ -241,6 +315,7 @@ module Corefines
       alias_method :only!, :only
       alias_method :rekey!, :rekey
       alias_method :symbolize_keys!, :symbolize_keys
+      alias_method :map_values!, :map_values
     end
   end
 end
