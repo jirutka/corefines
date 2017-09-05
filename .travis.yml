@@ -19,6 +19,11 @@ addons:
   code_climate:
     repo_token:
       secure: DNXX6vrtb1D1NSxA22LTgHAnIEiRt5OJ6sYeakj3tdtOwclA9/dT+mYA8zI+l8uI7d0ojdWGlWWoJKbLsVvebDaoYSVm7ekLBMS3dhQ/gvd5RIZ0Eo6xadB0QMfsTXIhCkFt8CNlL0YI89abyhLSX2Vn8QFN7K5ihbkKatR+2JY=
+before_install: |
+  if [ "$TRAVIS_RUBY_VERSION" = 1.9.3 ]; then
+      gem remove bundler
+      gem install bundler
+  fi
 after_success:
   - bundle exec codeclimate-test-reporter
 deploy:
