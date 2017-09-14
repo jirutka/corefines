@@ -133,6 +133,35 @@ module Corefines
     end
 
     ##
+    # @!method recurse(&block)
+    #   Transforms this hash and each of its sub-hashes recursively using the
+    #   given _block_.
+    #
+    #   It does not mutate the hash if the given _block_ is pure (i.e. does not
+    #   modify given hashes, but returns new ones).
+    #
+    #   @example
+    #     hash = {"a" => 1, "b" => {"c" => {"e" => 5}, "d" => 4}}
+    #     hash.recurse!(&:symbolize_keys!)  # => {a: 1, b: {c: {e: 5}, d: 4}}
+    #     hash  # => {a: 1, b: {c: {e: 5}, d: 4}}
+    #
+    #   @yield [Hash] gives this hash and every sub-hash (recursively).
+    #     The return value replaces the old value.
+    #   @return [Hash] a result of applying _block_ to this hash and each of
+    #     its sub-hashes (recursively).
+    #
+    module Recurse
+      refine ::Hash do
+        def recurse(&block)
+          h = yield(self)
+          h.each do |key, value|
+            h[key] = value.recurse(&block) if value.is_a? ::Hash
+          end
+        end
+      end
+    end
+
+    ##
     # @!method rekey(key_map = nil, &block)
     #   Returns a new hash with keys transformed according to the given
     #   _key_map_ or the _block_.

@@ -4,6 +4,11 @@
 :issue-uri: {repo-uri}/issues
 
 
+== Unreleased
+
+* Add new refinement {doc-base-url}/Hash/Recurse[Hash#recurse].
+
+
 == 1.10.0 (2017-07-26)
 
 * Replace deprecated `Fixnum` with `Integer`.
