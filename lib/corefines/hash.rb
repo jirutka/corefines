@@ -179,7 +179,11 @@ module Corefines
     #
     #   @example
     #     hash = {"a" => 1, "b" => {"c" => {"e" => 5}, "d" => 4}}
-    #     hash.recurse!(&:symbolize_keys!)  # => {a: 1, b: {c: {e: 5}, d: 4}}
+    #
+    #     hash.recurse { |h| h.symbolize_keys }  # => {a: 1, b: {c: {e: 5}, d: 4}}
+    #     hash  # => {"a" => 1, "b" => {"c" => {"e" => 5}, "d" => 4}}
+    #
+    #     hash.recurse { |h| h.symbolize_keys! }  # => {a: 1, b: {c: {e: 5}, d: 4}}
     #     hash  # => {a: 1, b: {c: {e: 5}, d: 4}}
     #
     #   @yield [Hash] gives this hash and every sub-hash (recursively).
