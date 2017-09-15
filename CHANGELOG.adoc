@@ -4,7 +4,7 @@
 :issue-uri: {repo-uri}/issues
 
 
-== Unreleased
+== 1.11.0 (2017-09-15)
 
 * Add new refinement {doc-base-url}/Hash/Recurse[Hash#recurse].
 * Add new refinement {doc-base-url}/Hash/FlatMap[Hash#flat_map].
