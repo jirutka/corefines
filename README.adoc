@@ -3,6 +3,7 @@ Jakub Jirutka <https://github.com/jirutka[@jirutka]>
 :source-language: ruby
 // custom
 :gem-name: corefines
+:gem-version: 1.10.0
 :gh-name: jirutka/{gem-name}
 :gh-branch: master
 :badge-style: flat
@@ -35,13 +36,13 @@ TODO
 
 Add this line to your application’s Gemfile:
 
-[source]
-gem 'corefines', '~> 1.10'
+[source, subs="+attributes"]
+gem '{gem-name}', '~> {gem-version}'
 
 or to your gemspec:
 
-[source]
-s.add_runtime_dependency 'corefines', '~> 1.10'
+[source, subs="+attributes"]
+s.add_runtime_dependency '{gem-name}', '~> {gem-version}'
 
 and then execute:
 
