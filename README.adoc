@@ -142,6 +142,7 @@ Not ideal indeed, but probably the best of what we can achieve.
 ** {doc-base-url}/Hash/Compact[#compact!]
 ** {doc-base-url}/Hash/Except[#except]
 ** {doc-base-url}/Hash/Except[#except!]
+** {doc-base-url}/Hash/FlatMap[#flat_map]
 ** {doc-base-url}/Hash/Only[#only]
 ** {doc-base-url}/Hash/Only[#only!]
 ** {doc-base-url}/Hash/Recurse[#recurse]

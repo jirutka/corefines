@@ -70,6 +70,43 @@ module Corefines
     end
 
     ##
+    # @!method flat_map(&block)
+    #   Returns a new hash with the merged results of running the _block_ once
+    #   for every entry in +self+.
+    #
+    #   @example
+    #     hash = { a: 1, b: 2, c: 3 }
+    #     hash.flat_map { |k, v| {k => v * 2, k.upcase => v} if v % 2 == 1 }
+    #     # => { a: 2, A: 1, c: 6, C: 3 }
+    #     hash.flat_map { |k, v| [[k, v * 2], [k.upcase => v]] if v % 2 == 1 }
+    #     # => { a: 2, A: 1, c: 6, C: 3 }
+    #
+    #   @yield [key, value] gives every key-value pair to the block.
+    #   @yieldreturn [#to_h, Array, nil] an object that will be interpreted as
+    #     a Hash and merged into the result, or nil to omit this key-value.
+    #   @return [Hash] a new hash.
+    module FlatMap
+      refine ::Hash do
+        def flat_map
+          each_with_object({}) do |(key, value), hash|
+            yielded = yield(key, value)
+
+            if yielded.is_a? ::Hash
+              hash.merge!(yielded)
+            elsif yielded.is_a? ::Array
+              # Array#to_h exists since Ruby 2.1.
+              yielded.each do |pair|
+                hash.store(*pair)
+              end
+            elsif yielded
+              hash.merge!(yielded.to_h)
+            end
+          end
+        end
+      end
+    end
+
+    ##
     # @!method only(*keys)
     #   @example
     #     hash = { a: 1, b: 2, c: 3, d: 4 }

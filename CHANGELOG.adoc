@@ -7,6 +7,7 @@
 == Unreleased
 
 * Add new refinement {doc-base-url}/Hash/Recurse[Hash#recurse].
+* Add new refinement {doc-base-url}/Hash/FlatMap[Hash#flat_map].
 
 
 == 1.10.0 (2017-07-26)
