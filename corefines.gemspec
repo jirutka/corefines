@@ -24,7 +24,6 @@ don't support refinements (yet).
   end
 
   s.require_paths = ['lib']
-  s.has_rdoc      = 'yard'
 
   s.required_ruby_version = '>= 1.9.3'
 
