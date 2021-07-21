@@ -4,7 +4,7 @@
 :issue-uri: {repo-uri}/issues
 
 
-== unreleased
+== 1.11.1 (2021-07-21)
 
 * Fix String#rekey with symbol proc (e.g. `&:to_s`) failing on Ruby 3.0.
 

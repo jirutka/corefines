@@ -3,7 +3,7 @@ Jakub Jirutka <https://github.com/jirutka[@jirutka]>
 :source-language: ruby
 // custom
 :gem-name: corefines
-:gem-version: 1.11.0
+:gem-version: 1.11.1
 :gh-name: jirutka/{gem-name}
 :gh-branch: master
 :badge-style: flat
