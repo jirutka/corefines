@@ -32,5 +32,5 @@ don't support refinements (yet).
   s.add_development_dependency 'rake', '~> 12.0'
   s.add_development_dependency 'rspec', '~> 3.1'
   s.add_development_dependency 'simplecov', '~> 0.9'
-  s.add_development_dependency 'yard', '~> 0.8'
+  s.add_development_dependency 'yard', '~> 0.9'
 end
