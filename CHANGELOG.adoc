@@ -4,6 +4,11 @@
 :issue-uri: {repo-uri}/issues
 
 
+== unreleased
+
+* Fix String#rekey with symbol proc (e.g. `&:to_s`) failing on Ruby 3.0.
+
+
 == 1.11.0 (2017-09-15)
 
 * Add new refinement {doc-base-url}/Hash/Recurse[Hash#recurse].

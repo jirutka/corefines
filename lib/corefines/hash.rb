@@ -247,19 +247,27 @@ module Corefines
       refine ::Hash do
         def rekey(key_map = nil, &block)
           fail ArgumentError, "provide key_map, or block, not both" if key_map && block
-          block = ->(k, _) { k.to_sym rescue k } if !key_map && !block
 
           # Note: self.dup is used to preserve the default_proc.
-          if block
-            # This is needed for "symbol procs" (e.g. &:to_s).
-            transform_key = block.arity.abs == 1 ? ->(k, _) { block[k] } : block
+          if key_map
+            key_map.each_with_object(dup) do |(from, to), hash|
+              hash[to] = hash.delete(from) if hash.key? from
+            end
+          else
+            transform_key = if !block
+              ->(k, _) { k.to_sym rescue k }
+            elsif block.arity.abs == 1 || block.lambda? && block.arity != 2
+              # This is needed for "symbol procs" (e.g. &:to_s). It behaves
+              # differently since Ruby 3.0!
+              # Ruby <3.0: block.arity => -1, block.lambda? => false
+              # Ruby 3.0: block.arity => -2, block.lambda? => true
+              ->(k, _) { block[k] }
+            else
+              block
+            end
 
             each_with_object(dup.clear) do |(key, value), hash|
               hash[ transform_key[key, value] ] = value
-            end
-          else
-            key_map.each_with_object(dup) do |(from, to), hash|
-              hash[to] = hash.delete(from) if hash.key? from
             end
           end
         end
